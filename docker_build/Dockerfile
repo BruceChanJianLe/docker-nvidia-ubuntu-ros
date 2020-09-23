@@ -117,7 +117,7 @@ RUN sudo apt-get autoclean -y -qq \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Set Entrypoint
-ENTRYPOINT [ "bash" ]
+# ENTRYPOINT [ "bash" ]
 
 # Run colorful prompt
-CMD ["bash", "-l"]
+CMD ["/bin/bash", "-l" ]
