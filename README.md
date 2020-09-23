@@ -27,3 +27,5 @@ docker images
 - Gazebo 9 update [link](http://gazebosim.org/tutorials?cat=install&tut=install_ubuntu&ver=9.0)
 - .docker.xauth does not exist [link](https://github.com/lbeaucourt/Object-detection/issues/7)
 - using dpkg --compare-version [link](https://mike632t.wordpress.com/2017/03/02/compairing-version-numbers-using-dpkg/)
+- xhost command [link](https://unix.stackexchange.com/questions/177557/what-does-this-xhost-command-do)
+- docker env COLUMNS and LINES reason [link](https://codeslake.github.io/ubuntu/installation/when-terminal-created-from-docker-exec-has-strange-behaviour-abnormal-size-command-vanishing/)
