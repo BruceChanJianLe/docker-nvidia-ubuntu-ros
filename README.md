@@ -2,6 +2,23 @@
 
 This repository demonstrates the steps to setup docker nvidia on ubuntu with ROS in a container.  
 
+## Building the Dockerfile
+
+Run the `build.bash` in the scripts directory. Follow the instructions to build the docker image.  
+```bash
+cd scripts
+./build.bash
+```
+
+## Viewing Docker images
+
+Run the following commands to verify if the image is correctly built.  
+```bash
+docker images
+# Output
+# REPOSITORY          TAG                           IMAGE ID            CREATED             SIZE
+# ubuntu18.04         nvros                         8803ef8c8563        3 hours ago         3.32GB
+```
 
 ## Reference
 - nvidia opengl [link](https://hub.docker.com/r/nvidia/opengl)
