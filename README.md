@@ -25,3 +25,5 @@ docker images
 - nvidia-docker ubuntu ros dockerfil reference [link](https://github.com/osrf/subt/blob/master/docker/subt_sim_entry/Dockerfile)
 - noninteractive explanation [link](https://linuxhint.com/debian_frontend_noninteractive/)
 - Gazebo 9 update [link](http://gazebosim.org/tutorials?cat=install&tut=install_ubuntu&ver=9.0)
+- .docker.xauth does not exist [link](https://github.com/lbeaucourt/Object-detection/issues/7)
+- using dpkg --compare-version [link](https://mike632t.wordpress.com/2017/03/02/compairing-version-numbers-using-dpkg/)
