@@ -7,6 +7,9 @@ LABEL maintainer="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
 LABEL website="https://github.com/BruceChanJianLe/docker-nvidia-ubuntu-ros"
 LABEL license="MIT"
 
+# Set colorful prompt
+ENV TERM xterm-256color
+
 # Useful tools for development
 RUN apt-get update -qq \
     && apt-get install -y -qq \
@@ -59,10 +62,16 @@ WORKDIR /home/$USERNAME
 RUN mkdir -p /home/$USERNAME/docker_mount
 
 # Export noninterative
-RUN export DEBIAN_FRONTEND=noninteractive
+RUN export DEBIAN_FRONTEND=noninteractive \
+ && sudo apt-get update -qq \
+ && sudo -E apt-get install -y -qq \
+    tzdata \
+ && sudo ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime \
+ && sudo dpkg-reconfigure --frontend noninteractive tzdata \
+ && sudo apt-get clean -qq
 
 # Install ROS 
-RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
+RUN sudo /bin/sh -c 'echo "deb [trusted=yes] http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
     && sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
     && sudo apt-get update -qq \
     && sudo apt-get install -y -qq \
@@ -103,9 +112,12 @@ RUN echo -e "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d
 RUN echo -e "\nsource /opt/ros/\$ROS_DISTRO/setup.bash" >> ~/.bashrc
 
 # config & cleanup
-RUN apt-get autoclean -y -qq && \
-        apt-get autoremove -y -qq && \
-        rm -rf /var/lib/apt/lists/* /tmp/*
+RUN sudo apt-get autoclean -y -qq \
+    && sudo apt-get autoremove -y -qq \
+    && sudo rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Set Entrypoint
 ENTRYPOINT [ "bash" ]
+
+# Run colorful prompt
+CMD ["bash", "-l"]
