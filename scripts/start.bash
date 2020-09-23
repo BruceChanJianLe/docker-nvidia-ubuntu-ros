@@ -44,7 +44,6 @@ else
 fi
 
 # Start docker container
-
 echo -e "Starting container image ubuntu18.04:nvros"
 read -p "Container name: " CONTAINERNAME
 
@@ -59,7 +58,6 @@ docker run -it \
   -v "/dev/input:/dev/input" \
   -v $(pwd)/..:/home/developer/docker_mount \
   --network host \
-  --rm \
   --privileged \
   --security-opt seccomp=unconfined \
   --name $CONTAINERNAME \
