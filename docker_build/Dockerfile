@@ -109,7 +109,7 @@ RUN echo -e "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d
         && sed -ie 's|#    . /etc/bash_completion|. /etc/bash_completion|g' ~/.bashrc 
 
 # Source ROS
-RUN echo -e "\nsource /opt/ros/\$ROS_DISTRO/setup.bash" >> ~/.bashrc
+RUN echo -e "\nsource /opt/ros/melodic/setup.bash" >> ~/.bashrc
 
 # config & cleanup
 RUN sudo apt-get autoclean -y -qq \
