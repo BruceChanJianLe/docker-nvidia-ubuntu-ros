@@ -26,7 +26,9 @@ read -p "Container name to be connected: " CONTAINERNAME
 
 if [[ -z ${arr[$CONTAINERNAME]} ]]
 then
-    docker exec --privileged -e DISPLAY=${DISPLAY} -e COLUMNS=`tput cols` -e LINES=`tput lines` -ti $CONTAINERNAME bash
+    # docker exec --privileged -e DISPLAY=${DISPLAY} -e COLUMNS=`tput cols` -e LINES=`tput lines` -ti $CONTAINERNAME bash
+    docker exec --privileged -e DISPLAY=${DISPLAY} -ti $CONTAINERNAME bash
 else
-    docker exec --privileged -e DISPLAY=${DISPLAY} -e COLUMNS=`tput cols` -e LINES=`tput lines` -ti ${arr[$CONTAINERNAME]} bash
+    # docker exec --privileged -e DISPLAY=${DISPLAY} -e COLUMNS=`tput cols` -e LINES=`tput lines` -ti ${arr[$CONTAINERNAME]} bash
+    docker exec --privileged -e DISPLAY=${DISPLAY} -ti ${arr[$CONTAINERNAME]} bash
 fi
