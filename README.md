@@ -20,6 +20,17 @@ docker images
 # ubuntu18.04         nvros                         8803ef8c8563        3 hours ago         3.32GB
 ```
 
+## Starting the Container
+
+Run the `start.bash` in the scripts directory. Follow the instructions to get the images running.  
+```bash
+cd scripts
+./start.bash
+```
+
+## Restarting the Container (after reboot)
+
+
 ## Reference
 - nvidia opengl [link](https://hub.docker.com/r/nvidia/opengl)
 - nvidia-docker ubuntu ros dockerfil reference [link](https://github.com/osrf/subt/blob/master/docker/subt_sim_entry/Dockerfile)
