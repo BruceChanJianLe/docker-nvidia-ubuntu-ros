@@ -56,7 +56,7 @@ docker run -it \
   -v "/tmp/.X11-unix:/tmp/.X11-unix" \
   -v "/etc/localtime:/etc/localtime:ro" \
   -v "/dev/input:/dev/input" \
-  -v $(pwd)/..:/home/developer/docker_mount \
+  -v $(pwd)/docker_mount:/home/developer/docker_mount \
   --network host \
   --privileged \
   --security-opt seccomp=unconfined \
