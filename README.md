@@ -30,6 +30,11 @@ cd scripts
 
 ## Restarting the Container (after reboot)
 
+Run the `restart.bash` in the scripts directory. Follow the instructions to restart the stopped container.  
+```bash
+cd scripts
+./restart.bash
+```
 
 ## Reference
 - nvidia opengl [link](https://hub.docker.com/r/nvidia/opengl)
