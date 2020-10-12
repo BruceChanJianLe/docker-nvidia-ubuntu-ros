@@ -36,6 +36,15 @@ cd scripts
 ./restart.bash
 ```
 
+## Joining the Container with New Terminal
+
+Run the `join.bash` in the scripts directory. Follow the instructions to join / connect to the running container.  
+```bash
+cd scripts
+./join.bash
+```
+The script uses `exec` instead of `attach` as this creates another process rather than using the already existed process.  
+
 ## Reference
 - nvidia opengl [link](https://hub.docker.com/r/nvidia/opengl)
 - nvidia-docker ubuntu ros dockerfil reference [link](https://github.com/osrf/subt/blob/master/docker/subt_sim_entry/Dockerfile)
@@ -49,3 +58,4 @@ cd scripts
  docker exec --privileged -e DISPLAY=${DISPLAY} -e COLUMNS=`tput cols` -e LINES=`tput lines` -ti ${arr[$CONTAINERNAME]} bash
 ```
 - symbol lookup error: /usr/lib/x86_64-linux-gnu/libgazebo_common.so.9 [link](https://answers.gazebosim.org//question/22071/symbol-lookup-error-both-instalation-methods/)
+- exec vs attach [link](https://stackoverflow.com/questions/30960686/difference-between-docker-attach-and-docker-exec)
