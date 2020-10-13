@@ -84,7 +84,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
  && sudo apt-get update -qq \
  && sudo -E apt-get install -y -qq \
     tzdata \
- && # echo 'Etc/UTC' > /etc/timezone \
+ && echo 'Etc/UTC' > sudo tee /etc/timezone \
  && sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime \
  && sudo dpkg-reconfigure --frontend noninteractive tzdata \
  && sudo apt-get clean -qq
