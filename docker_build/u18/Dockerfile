@@ -44,6 +44,8 @@ RUN apt-get update -qq \
     libyaml-cpp-dev \
     tmux \
     curl \
+    htop \
+    bash-completion \
  && apt-get clean -qq
 
 # Add a user with the same user_id as the user outside of the container
