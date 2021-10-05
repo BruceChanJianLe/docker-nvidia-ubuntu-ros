@@ -45,7 +45,7 @@ fi
 
 # Start docker container
 echo -e "Starting container image ubuntu18.04:nvros"
-read -p "Would you like to auto start this container upon reboot?" value
+read -p "Would you like to auto start this container upon reboot?[Y/n]" value
 
 read -p "Container name: " CONTAINERNAME
 
