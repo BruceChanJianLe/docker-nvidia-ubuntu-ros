@@ -52,7 +52,7 @@ then
 fi
 
 # Obtain container's name
-read -p "Container number to be connected: " CONTAINERNAME
+read -p "Container number to be restarted: " CONTAINERNAME
 
 if [[ -z ${arr[$CONTAINERNAME]} ]]
 then
