@@ -44,7 +44,17 @@ else
 fi
 
 # Start docker container
-echo -e "Starting container image ubuntu18.04:nvros"
+image=""
+
+read -p "Select container image to start ubuntu20.04:nvros/ubuntu20.04:nvros2 [1/2]? " value
+if [[ -z $value || $value == 1 ]]
+then
+    image="ubuntu20.04:nvros"
+elif [[ $value == 2 ]]
+then
+    image="ubuntu20.04:nvros2"
+fi
+
 read -p "Container name: " CONTAINERNAME
 
 docker run -it \
@@ -63,4 +73,4 @@ docker run -it \
   --name $CONTAINERNAME \
   --cap-add=SYS_PTRACE \
   $DOCKER_OPTS \
-  ubuntu20.04:nvros2
+  $image
