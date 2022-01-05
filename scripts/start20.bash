@@ -63,4 +63,4 @@ docker run -it \
   --name $CONTAINERNAME \
   --cap-add=SYS_PTRACE \
   $DOCKER_OPTS \
-  ubuntu20.04:nvros
+  ubuntu20.04:nvros2
