@@ -7,7 +7,7 @@ read -p "Select the Ubuntu version you wish to build upon[18/20]:" version
 if [[ $version == 18 ]]
 then
     # To build or not to build
-    read -p "This script will build docker image ubuntu18.04:nvros continue[Y/n]?" value
+    read -p "This script will build docker image ubuntu18.04:nvros continue[Y/n]? " value
 
     # Verify build check
     if [[ -z $value || $value == y || $value == Y ]]
@@ -20,13 +20,24 @@ then
 elif [[ $version == 20 ]]
 then
     # To build or not to build
-    read -p "This script will build docker image ubuntu20.04:nvros contunue[Y/n]?" value
+    read -p "This script will build docker image ubuntu20.04:nvros contunue[Y/n]? " value
 
     # Verify build check
     if [[ -z $value || $value == y || $value == Y ]]
     then
-        user_id=$(id -u)
-        docker build --rm -t ubuntu20.04:nvros --build-arg user_id=$user_id -f ../docker_build/u20/Dockerfile .
+        # Select which version of ROS
+        read -p "Select ROS1 or ROS2[1/2]? " value
+        if [[ -z $value || $value == 1 ]]
+        then
+            user_id=$(id -u)
+            docker build --rm -t ubuntu20.04:nvros1 --build-arg user_id=$user_id -f ../docker_build/u20/ros1/Dockerfile .
+        elif [[ $value == 2 ]]
+        then
+            user_id=$(id -u)
+            docker build --rm -t ubuntu20.04:nvros2 --build-arg user_id=$user_id -f ../docker_build/u20/ros2/Dockerfile .
+        else
+            echo "Invalid selection, nothing will be built."
+        fi
     else
         exit 1
     fi
