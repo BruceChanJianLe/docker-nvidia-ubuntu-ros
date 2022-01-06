@@ -128,9 +128,15 @@ RUN sudo /bin/sh -c 'echo "deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/ma
     && curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add - \
     && sudo apt update -y -qq \
     && sudo apt install -y -qq python3-colcon-common-extensions
-# 
+
 RUN echo "\nsource /usr/share/colcon_cd/function/colcon_cd.sh" >> ~/.ros2_env \
     && echo "\nsource /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.ros2_env
+
+# Installing Rosdep
+RUN sudo apt update -y -qq \
+    && sudo DEBIAN_FRONTEND=noninteractive apt install python3-rosdep -y -qq \
+    && sudo rosdep init \
+    && rosdep update
 
 # Setup tmux and vim
 RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_Setup/master/.tmux.conf \
