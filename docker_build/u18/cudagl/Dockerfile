@@ -1,5 +1,5 @@
 # Ubuntu 18.04 with nvidia-docker2 (opengl)
-FROM nvidia/cudagl:11.4.0-runtime-ubuntu18.04
+FROM nvidia/cudagl:11.4.0-devel-ubuntu18.04
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
