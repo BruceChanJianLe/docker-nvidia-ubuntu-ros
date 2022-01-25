@@ -44,49 +44,94 @@ else
 fi
 
 # Start docker container
-echo -e "Starting container image ubuntu18.04:nvros"
+echo -e "Starting container image ubuntu18.04:nvros/cnros"
+read -p "Would you like to start with cuda?[y/N]" cuda
 read -p "Would you like to auto start this container upon reboot?[Y/n]" value
 
 read -p "Container name: " CONTAINERNAME
 
-# Verify build check
-if [[ -z $value || $value == y || $value == Y ]]
+if [[ -z $cuda || $cuda == n || $cuda == N ]]
 then
-    docker run -it \
-      -d \
-      -e DISPLAY \
-      -e QT_X11_NO_MITSHM=1 \
-      -e XAUTHORITY=$XAUTH \
-      -v "$XAUTH:$XAUTH" \
-      -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-      -v "/etc/localtime:/etc/localtime:ro" \
-      -v "/dev/input:/dev/input" \
-      -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-      --network host \
-      --privileged \
-      --security-opt seccomp=unconfined \
-      --name $CONTAINERNAME \
-      --cap-add=SYS_PTRACE \
-      --restart unless-stopped \
-      $DOCKER_OPTS \
-      ubuntu18.04:nvros
-else
-    docker run -it \
-      -d \
-      -e DISPLAY \
-      -e QT_X11_NO_MITSHM=1 \
-      -e XAUTHORITY=$XAUTH \
-      -v "$XAUTH:$XAUTH" \
-      -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-      -v "/etc/localtime:/etc/localtime:ro" \
-      -v "/dev/input:/dev/input" \
-      -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-      --network host \
-      --privileged \
-      --security-opt seccomp=unconfined \
-      --name $CONTAINERNAME \
-      --cap-add=SYS_PTRACE \
-      $DOCKER_OPTS \
-      ubuntu18.04:nvros
+    # Verify build check
+    if [[ -z $value || $value == y || $value == Y ]]
+    then
+        docker run -it \
+          -d \
+          -e DISPLAY \
+          -e QT_X11_NO_MITSHM=1 \
+          -e XAUTHORITY=$XAUTH \
+          -v "$XAUTH:$XAUTH" \
+          -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+          -v "/etc/localtime:/etc/localtime:ro" \
+          -v "/dev/input:/dev/input" \
+          -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+          --network host \
+          --privileged \
+          --security-opt seccomp=unconfined \
+          --name $CONTAINERNAME \
+          --cap-add=SYS_PTRACE \
+          --restart unless-stopped \
+          $DOCKER_OPTS \
+          ubuntu18.04:nvros
+    else
+        docker run -it \
+          -d \
+          -e DISPLAY \
+          -e QT_X11_NO_MITSHM=1 \
+          -e XAUTHORITY=$XAUTH \
+          -v "$XAUTH:$XAUTH" \
+          -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+          -v "/etc/localtime:/etc/localtime:ro" \
+          -v "/dev/input:/dev/input" \
+          -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+          --network host \
+          --privileged \
+          --security-opt seccomp=unconfined \
+          --name $CONTAINERNAME \
+          --cap-add=SYS_PTRACE \
+          $DOCKER_OPTS \
+          ubuntu18.04:nvros
+    fi
+elif [[ $cuda == y || $cuda == Y ]]
+then
+    # Verify build check
+    if [[ -z $value || $value == y || $value == Y ]]
+    then
+        docker run -it \
+          -d \
+          -e DISPLAY \
+          -e QT_X11_NO_MITSHM=1 \
+          -e XAUTHORITY=$XAUTH \
+          -v "$XAUTH:$XAUTH" \
+          -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+          -v "/etc/localtime:/etc/localtime:ro" \
+          -v "/dev/input:/dev/input" \
+          -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+          --network host \
+          --privileged \
+          --security-opt seccomp=unconfined \
+          --name $CONTAINERNAME \
+          --cap-add=SYS_PTRACE \
+          --restart unless-stopped \
+          $DOCKER_OPTS \
+          ubuntu18.04:cnvros
+    else
+        docker run -it \
+          -d \
+          -e DISPLAY \
+          -e QT_X11_NO_MITSHM=1 \
+          -e XAUTHORITY=$XAUTH \
+          -v "$XAUTH:$XAUTH" \
+          -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+          -v "/etc/localtime:/etc/localtime:ro" \
+          -v "/dev/input:/dev/input" \
+          -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+          --network host \
+          --privileged \
+          --security-opt seccomp=unconfined \
+          --name $CONTAINERNAME \
+          --cap-add=SYS_PTRACE \
+          $DOCKER_OPTS \
+          ubuntu18.04:cnvros
+    fi
 fi
-
