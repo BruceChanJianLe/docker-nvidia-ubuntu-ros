@@ -13,7 +13,7 @@ then
     if [[ -z $value || $value == y || $value == Y ]]
     then
         user_id=$(id -u)
-        docker build --rm -t "ubuntu18.04:cnvros" --build-arg user_id=$user_id -f ../docker_build/u18/cuda/Dockerfile .
+        docker build --rm -t "ubuntu18.04:cnvros" --build-arg user_id=$user_id -f ../docker_build/u18/cudagl/Dockerfile .
     else
         # To build or not to build
         read -p "This script will build docker image ubuntu18.04:nvros continue[Y/n]? " value
