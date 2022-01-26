@@ -32,7 +32,7 @@ ENV TERM xterm-256color
 ENV LANG en_US.UTF-8
 
 RUN apt-get update -qq \
-    && apt-get install -y -qq \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
     build-essential \
     cmake \
     cppcheck \
