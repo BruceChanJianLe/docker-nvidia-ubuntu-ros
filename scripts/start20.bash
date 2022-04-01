@@ -46,13 +46,16 @@ fi
 # Start docker container
 image=""
 
-read -p "Select container image to start ubuntu20.04:nvros/ubuntu20.04:nvros2 [1/2]? " value
+read -p "Select container image to start ubuntu20.04:cnvros/ubuntu20.04:cnvros2/ubuntu20.04:cnvros1ros2 [1/2/3]? " value
 if [[ -z $value || $value == 1 ]]
 then
-    image="ubuntu20.04:nvros"
+    image="ubuntu20.04:cnvros"
 elif [[ $value == 2 ]]
 then
-    image="ubuntu20.04:nvros2"
+    image="ubuntu20.04:cnvros2"
+elif [[ $value == 3 ]]
+then
+    image="ubuntu20.04:cnvros1ros2"
 fi
 
 read -p "Container name: " CONTAINERNAME

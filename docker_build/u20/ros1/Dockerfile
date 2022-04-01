@@ -99,10 +99,10 @@ RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release 
     && sudo apt-get update -qq \
     && sudo apt-get install -y -qq \
     ros-noetic-desktop-full \
-    python-rosdep \
-    python-rosinstall \
-    python-rosinstall-generator \
-    python-wstool \
+    python3-rosdep \
+    python3-rosinstall \
+    python3-rosinstall-generator \
+    python3-wstool \
     && sudo rosdep init \
     && sudo apt-get clean -qq
 

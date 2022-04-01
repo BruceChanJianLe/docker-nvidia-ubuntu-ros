@@ -30,21 +30,25 @@ then
 elif [[ $version == 20 ]]
 then
     # To build or not to build
-    read -p "This script will build docker image ubuntu20.04:nvros contunue[Y/n]? " value
+    read -p "This script will build docker image ubuntu20.04:cnvros contunue[Y/n]? " value
 
     # Verify build check
     if [[ -z $value || $value == y || $value == Y ]]
     then
         # Select which version of ROS
-        read -p "Select ROS1 or ROS2[1/2]? " value
+        read -p "Select ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3]? " value
         if [[ -z $value || $value == 1 ]]
         then
             user_id=$(id -u)
-            docker build --rm -t ubuntu20.04:nvros1 --build-arg user_id=$user_id -f ../docker_build/u20/ros1/Dockerfile .
+            docker build --rm -t ubuntu20.04:cnvros1 --build-arg user_id=$user_id -f ../docker_build/u20/ros1/Dockerfile .
         elif [[ $value == 2 ]]
         then
             user_id=$(id -u)
-            docker build --rm -t ubuntu20.04:nvros2 --build-arg user_id=$user_id -f ../docker_build/u20/ros2/Dockerfile .
+            docker build --rm -t ubuntu20.04:cnvros2 --build-arg user_id=$user_id -f ../docker_build/u20/ros2/Dockerfile .
+        elif [[ $value == 3 ]]
+        then
+            user_id=$(id -u)
+            docker build --rm -t ubuntu20.04:cnvros1ros2 --build-arg user_id=$user_id -f ../docker_build/u20/ros1_ros2/Dockerfile .
         else
             echo "Invalid selection, nothing will be built."
         fi
