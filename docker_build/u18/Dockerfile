@@ -113,6 +113,8 @@ RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_
         && echo "    [ -s \"\$BASE16_SHELL/profile_helper.sh\" ] && \\"  >> ~/.bashrc \
         && echo "        eval \"\$(\"\$BASE16_SHELL/profile_helper.sh\")\"" >> ~/.bashrc
 
+RUN sudo apt install -y -qq xsel xclip
+
 # Setup color prompt and git
 RUN echo "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\\\1)/'\n}" >> ~/.bashrc \
         && echo "\nPS1='🐳\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
@@ -126,16 +128,6 @@ RUN mkdir -p ~/.vim/undodir \
         && curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 RUN vim +PlugInstall +qa
-
-# Setup tab completion
-RUN sudo
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
 
 # config & cleanup
 RUN sudo apt-get autoclean -y -qq \
