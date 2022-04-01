@@ -59,6 +59,8 @@ RUN apt-get update -qq \
     libyaml-cpp-dev \
     tmux \
     curl \
+    htop \
+    bash-completion \
     && apt-get clean -qq
 
 # Add a user with the same user_id as the user outside of the container
@@ -154,6 +156,12 @@ RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_
 RUN echo "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\\\1)/'\n}" >> ~/.bashrc \
         && echo "\nPS1='🐳\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
         && sed -ie 's|#    . /etc/bash_completion|. /etc/bash_completion|g' ~/.bashrc 
+
+# Setup Vim
+RUN mkdir -p ~/.vim/undodir \
+        && curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+RUN vim +PlugInstall +qa
 
 # config & cleanup
 RUN sudo apt-get autoclean -y -qq \

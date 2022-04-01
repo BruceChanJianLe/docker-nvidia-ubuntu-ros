@@ -61,6 +61,8 @@ RUN apt-get update -qq \
     libyaml-cpp-dev \
     tmux \
     curl \
+    htop \
+    bash-completion \
  && apt-get clean -qq
 
 # Add a user with the same user_id as the user outside of the container
@@ -134,6 +136,13 @@ RUN echo "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d' -
 
 # Source ROS
 RUN echo "\nsource /opt/ros/neotic/setup.bash" >> ~/.bashrc
+
+# Setup Vim
+RUN mkdir -p ~/.vim/undodir \
+        && curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+RUN vim +PlugInstall +qa
+
 
 # config & cleanup
 RUN sudo apt-get autoclean -y -qq \
