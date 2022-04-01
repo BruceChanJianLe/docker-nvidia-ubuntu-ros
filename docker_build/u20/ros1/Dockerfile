@@ -1,5 +1,5 @@
-# Ubuntu 20.04 with nvidia-docker2 (cuda)
-FROM nvidia/cuda:11.1-devel-ubuntu20.04
+# Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
+FROM nvidia/cudagl:11.1-devel-ubuntu20.04
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
