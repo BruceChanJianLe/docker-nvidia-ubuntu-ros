@@ -7,6 +7,13 @@ LABEL maintainer="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
 LABEL website="https://github.com/BruceChanJianLe/docker-nvidia-ubuntu-ros"
 LABEL license="MIT"
 
+#Install Nvidia keyring and get updated GPG keys
+RUN sed -i '/developer\.download\.nvidia\.com\/compute\/cuda\/repos/d' /etc/apt/sources.list.d/* &&\
+    sed -i '/developer\.download\.nvidia\.com\/compute\/machine-learning\/repos/d' /etc/apt/sources.list.d/* &&\
+    apt-get update && apt-get install -y wget &&\
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb &&\
+    dpkg -i cuda-keyring_1.0-1_all.deb
+
 # Set Nvidia environment
 ENV NVIDIA_VISIBLE_DEVICES \
     ${NVIDIA_VISIBLE_DEVICES:-all}
