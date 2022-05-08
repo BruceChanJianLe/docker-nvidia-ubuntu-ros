@@ -137,7 +137,7 @@ RUN echo "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d' -
         && sed -ie 's|#    . /etc/bash_completion|. /etc/bash_completion|g' ~/.bashrc 
 
 # Source ROS
-RUN echo "\nsource /opt/ros/neotic/setup.bash" >> ~/.bashrc
+RUN echo "\nsource /opt/ros/noetic/setup.bash" >> ~/.bashrc
 
 # Setup Vim
 RUN mkdir -p ~/.vim/undodir \
