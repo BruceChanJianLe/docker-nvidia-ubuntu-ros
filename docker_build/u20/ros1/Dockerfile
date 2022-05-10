@@ -1,5 +1,5 @@
 # Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
-FROM nvidia/cudagl:11.1-devel-ubuntu20.04
+FROM nvidia/cudagl:11.4.0-devel-ubuntu20.04
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
@@ -31,6 +31,18 @@ ENV TERM xterm-256color
 # Set LANG in order to display emoji
 ENV LANG en_US.UTF-8
 
+# Export noninterative
+RUN export DEBIAN_FRONTEND=noninteractive \
+&& apt-get update \
+&& apt-get install --no-install-recommends -y \
+tzdata \
+&& ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime \
+&& dpkg-reconfigure --frontend noninteractive tzdata \
+&& apt-get clean -qq \
+&& apt-get install --no-install-recommends -y keyboard-configuration \
+&& dpkg-reconfigure --frontend noninteractive keyboard-configuration \
+&& apt-get clean -qq
+
 RUN apt-get update -qq \
     && apt-get install -y -qq \
     build-essential \
@@ -50,8 +62,8 @@ RUN apt-get update -qq \
     python3-setuptools \
     python3-pip \
     python3-venv \
-    ruby2.5 \
-    ruby2.5-dev \
+    ruby2.7 \
+    ruby2.7-dev \
     software-properties-common \
     sudo \
     vim \
@@ -82,16 +94,6 @@ WORKDIR /home/$USERNAME
 
 # Make a mounting directory
 RUN mkdir -p /home/$USERNAME/docker_mount
-
-# Export noninterative
-RUN export DEBIAN_FRONTEND=noninteractive \
- && sudo apt-get update -qq \
- && sudo -E apt-get install -y -qq \
-    tzdata \
- && echo 'Etc/UTC' > sudo tee /etc/timezone \
- && sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime \
- && sudo dpkg-reconfigure --frontend noninteractive tzdata \
- && sudo apt-get clean -qq
 
 # Install ROS 
 RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
