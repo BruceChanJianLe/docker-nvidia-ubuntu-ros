@@ -40,7 +40,7 @@ then
         if [[ -z $value || $value == 1 ]]
         then
             user_id=$(id -u)
-            docker build --rm -t ubuntu20.04:cnvros1 --build-arg user_id=$user_id -f ../docker_build/u20/ros1/Dockerfile .
+            docker build --rm -t ubuntu20.04:cnvros --build-arg user_id=$user_id -f ../docker_build/u20/ros1/Dockerfile .
         elif [[ $value == 2 ]]
         then
             user_id=$(id -u)
