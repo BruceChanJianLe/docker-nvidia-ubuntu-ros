@@ -40,15 +40,15 @@ then
         if [[ -z $value || $value == 1 ]]
         then
             user_id=$(id -u)
-            docker build --rm -t ubuntu20.04:cnvros --build-arg user_id=$user_id -f ../docker_build/u20/ros1/Dockerfile .
+            docker build --rm -t ubuntu20.04:cnvros --build-arg user_id=$user_id -f ../docker_build/u20/cudagl/ros1/Dockerfile .
         elif [[ $value == 2 ]]
         then
             user_id=$(id -u)
-            docker build --rm -t ubuntu20.04:cnvros2 --build-arg user_id=$user_id -f ../docker_build/u20/ros2/Dockerfile .
+            docker build --rm -t ubuntu20.04:cnvros2 --build-arg user_id=$user_id -f ../docker_build/u20/cudagl/ros2/Dockerfile .
         elif [[ $value == 3 ]]
         then
             user_id=$(id -u)
-            docker build --rm -t ubuntu20.04:cnvros1ros2 --build-arg user_id=$user_id -f ../docker_build/u20/ros1_ros2/Dockerfile .
+            docker build --rm -t ubuntu20.04:cnvros1ros2 --build-arg user_id=$user_id -f ../docker_build/u20/cudagl/ros1_ros2/Dockerfile .
         else
             echo "Invalid selection, nothing will be built."
         fi
