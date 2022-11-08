@@ -59,4 +59,4 @@ The script uses `exec` instead of `attach` as this creates another process rathe
 ```
 - symbol lookup error: /usr/lib/x86_64-linux-gnu/libgazebo_common.so.9 [link](https://answers.gazebosim.org//question/22071/symbol-lookup-error-both-instalation-methods/)
 - exec vs attach [link](https://stackoverflow.com/questions/30960686/difference-between-docker-attach-and-docker-exec)
-- opengl non nvidia [link](https://medium.com/@benjamin.botto/opengl-and-cuda-applications-in-docker-af0eece000f1)
+- opengl non nvidia [link1](https://medium.com/@benjamin.botto/opengl-and-cuda-applications-in-docker-af0eece000f1) [link2](https://github.com/utensils/docker-opengl)
