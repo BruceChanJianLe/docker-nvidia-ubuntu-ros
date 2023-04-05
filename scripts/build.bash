@@ -30,7 +30,7 @@ then
 elif [[ $version == 20 ]]
 then
     # To build or not to build
-    read -p "This script will build docker image ubuntu20.04:cnvros contunue[Y/n]? " value
+    read -p "This script will build docker image ubuntu20.04:cnvros continue[Y/n]? " value
 
     # Verify build check
     if [[ -z $value || $value == y || $value == Y ]]
