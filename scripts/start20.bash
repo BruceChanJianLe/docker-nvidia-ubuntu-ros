@@ -46,16 +46,38 @@ fi
 # Start docker container
 image=""
 
-read -p "Select container image to start ubuntu20.04:cnvros/ubuntu20.04:cnvros2/ubuntu20.04:cnvros1ros2 [1/2/3]? " value
-if [[ -z $value || $value == 1 ]]
+read -p "NVIDIA Images / Non-NVIDIA images [Y/n]? " value
+
+# Verify NVIDIA check
+if [[ -z $value || $value == y || $value == Y ]]
 then
-    image="ubuntu20.04:cnvros"
-elif [[ $value == 2 ]]
-then
-    image="ubuntu20.04:cnvros2"
-elif [[ $value == 3 ]]
-then
-    image="ubuntu20.04:cnvros1ros2"
+
+  read -p "Select container image to start ubuntu20.04:cnvros/ubuntu20.04:cnvros2/ubuntu20.04:cnvros1ros2 [1/2/3]? " value
+  if [[ -z $value || $value == 1 ]]
+  then
+      image="ubuntu20.04:cnvros"
+  elif [[ $value == 2 ]]
+  then
+      image="ubuntu20.04:cnvros2"
+  elif [[ $value == 3 ]]
+  then
+      image="ubuntu20.04:cnvros1ros2"
+  fi
+
+else
+
+  read -p "Select container image to start ubuntu20.04:ros/ubuntu20.04:ros2/ubuntu20.04:ros1ros2 [1/2/3]? " value
+  if [[ -z $value || $value == 1 ]]
+  then
+      image="ubuntu20.04:ros"
+  elif [[ $value == 2 ]]
+  then
+      image="ubuntu20.04:ros2"
+  elif [[ $value == 3 ]]
+  then
+      image="ubuntu20.04:ros1ros2"
+  fi
+
 fi
 
 read -p "Container name: " CONTAINERNAME
