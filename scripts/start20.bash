@@ -64,6 +64,27 @@ then
       image="ubuntu20.04:cnvros1ros2"
   fi
 
+  # Start docker container
+  read -p "Container name: " CONTAINERNAME
+
+  docker run -it \
+    -d \
+    -e DISPLAY \
+    -e QT_X11_NO_MITSHM=1 \
+    -e XAUTHORITY=$XAUTH \
+    -v "$XAUTH:$XAUTH" \
+    -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+    -v "/etc/localtime:/etc/localtime:ro" \
+    -v "/dev/input:/dev/input" \
+    -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+    --network host \
+    --privileged \
+    --security-opt seccomp=unconfined \
+    --name $CONTAINERNAME \
+    --cap-add=SYS_PTRACE \
+    $DOCKER_OPTS \
+    $image
+
 else
 
   read -p "Select container image to start ubuntu20.04:ros/ubuntu20.04:ros2/ubuntu20.04:ros1ros2 [1/2/3]? " value
@@ -78,24 +99,25 @@ else
       image="ubuntu20.04:ros1ros2"
   fi
 
+  # Start docker container
+  read -p "Container name: " CONTAINERNAME
+
+  docker run -it \
+    -d \
+    -e DISPLAY \
+    -e QT_X11_NO_MITSHM=1 \
+    -e XAUTHORITY=$XAUTH \
+    -v "$XAUTH:$XAUTH" \
+    -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+    -v "/etc/localtime:/etc/localtime:ro" \
+    -v "/dev/input:/dev/input" \
+    -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+    --network host \
+    --privileged \
+    --security-opt seccomp=unconfined \
+    --name $CONTAINERNAME \
+    --cap-add=SYS_PTRACE \
+    $image
+
 fi
 
-read -p "Container name: " CONTAINERNAME
-
-docker run -it \
-  -d \
-  -e DISPLAY \
-  -e QT_X11_NO_MITSHM=1 \
-  -e XAUTHORITY=$XAUTH \
-  -v "$XAUTH:$XAUTH" \
-  -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-  -v "/etc/localtime:/etc/localtime:ro" \
-  -v "/dev/input:/dev/input" \
-  -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-  --network host \
-  --privileged \
-  --security-opt seccomp=unconfined \
-  --name $CONTAINERNAME \
-  --cap-add=SYS_PTRACE \
-  $DOCKER_OPTS \
-  $image
