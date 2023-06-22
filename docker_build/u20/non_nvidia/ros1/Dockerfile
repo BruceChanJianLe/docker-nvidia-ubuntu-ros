@@ -1,29 +1,11 @@
 # Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
-FROM nvidia/cudagl:11.4.0-devel-ubuntu20.04
+FROM ros:noetic-ros-base-focal
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
 LABEL maintainer="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
 LABEL website="https://github.com/BruceChanJianLe/docker-nvidia-ubuntu-ros"
 LABEL license="MIT"
-
-# Set Nvidia environment
-ENV NVIDIA_VISIBLE_DEVICES \
-    ${NVIDIA_VISIBLE_DEVICES:-all}
-ENV NVIDIA_DRIVER_CAPABILITIES \
-    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
-
-# ENVIRONMENT STUFF FOR CUDA
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/cuda/lib64
-ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
-ENV PATH=/usr/local/cuda/bin:$PATH
-ENV CUDA_ROOT /usr/local/cuda
-
-# recommended from nvidia to use the cuda devices
-ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 # Set colorful prompt
 ENV TERM xterm-256color
@@ -95,30 +77,6 @@ WORKDIR /home/$USERNAME
 # Make a mounting directory
 RUN mkdir -p /home/$USERNAME/docker_mount
 
-# Install ROS 
-RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
-    && sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
-    && sudo apt-get update -qq \
-    && sudo apt-get install -y -qq \
-    ros-noetic-desktop-full \
-    python3-rosdep \
-    python3-rosinstall \
-    python3-rosinstall-generator \
-    python3-wstool \
-    && sudo rosdep init \
-    && sudo apt-get clean -qq
-
-# ROS DEP update
-RUN rosdep update
-
-# Update Gazebo 11
-RUN sudo /bin/sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' \
-    && wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - \
-    && sudo apt-get update -qq \
-    && sudo apt-get install -y -qq \
-    gazebo11 \
-    && sudo apt-get upgrade -y -qq
-
 # Setup tmux and vim
 RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_Setup/master/.tmux.conf \
         && curl https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux > ~/.bash_completion \
@@ -129,7 +87,7 @@ RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_
         && echo "BASE16_SHELL=\"\$HOME/.config/base16-shell/\"" >> ~/.bashrc \
         && echo "[ -n \"\$PS1\" ] && \\"  >> ~/.bashrc \
         && echo "    [ -s \"\$BASE16_SHELL/profile_helper.sh\" ] && \\"  >> ~/.bashrc \
-        && echo "        eval \"\$(\"\$BASE16_SHELL/profile_helper.sh\")\"" >> ~/.bashrc
+        && echo "        source \"\$BASE16_SHELL/profile_helper.sh\"" >> ~/.bashrc
 
 RUN sudo apt install -y -qq xsel xclip
 
