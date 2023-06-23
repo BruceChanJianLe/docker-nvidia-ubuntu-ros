@@ -1,4 +1,4 @@
-# Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
+# Ubuntu 20.04 non-nvidia (ros1)
 FROM ros:noetic-ros-base-focal
 
 # Author Information
@@ -77,6 +77,10 @@ WORKDIR /home/$USERNAME
 # Make a mounting directory
 RUN mkdir -p /home/$USERNAME/docker_mount
 
+# ROS aliases
+RUN echo "\n alias gzkill='pkill -f gzclient; pkill -f gzserver; pkill -f gazebo'" >> ~/.bashrc \
+    && echo "\nalias roskill='for i in \$(pgrep -f ros/\$ROS_DISTRO); do kill \$i; done'" >> ~/.bashrc \
+
 # Setup tmux and vim
 RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_Setup/master/.tmux.conf \
         && curl https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux > ~/.bash_completion \
@@ -93,7 +97,7 @@ RUN sudo apt install -y -qq xsel xclip
 
 # Setup color prompt and git
 RUN echo "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\\\1)/'\n}" >> ~/.bashrc \
-        && echo "\nPS1='🐳\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
+        && echo "\nPS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u\[\033[01;36m\]U20🐳\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
         && sed -ie 's|#    . /etc/bash_completion|. /etc/bash_completion|g' ~/.bashrc 
 
 # Source ROS

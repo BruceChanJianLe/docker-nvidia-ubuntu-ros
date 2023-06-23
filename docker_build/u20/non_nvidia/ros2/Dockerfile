@@ -1,4 +1,4 @@
-# Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
+# Ubuntu 20.04 non-nvidia (ros2)
 FROM ros:galactic-ros-base-focal
 
 # Author Information
@@ -73,20 +73,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
  && sudo dpkg-reconfigure --frontend noninteractive tzdata \
  && sudo apt-get clean -qq
 
-# Install ROS2
-RUN sudo apt update -y -qq \
-    && sudo apt upgrade -y -qq \
-    && sudo apt install locales -y -qq \
-    && sudo locale-gen en_US en_US.UTF-8 \
-    && sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
-    && export LANG=en_US.UTF-8 \
-    && sudo apt install software-properties-common -y -qq \
-    && sudo add-apt-repository universe \
-    && sudo apt update -y -qq && sudo apt install curl gnupg lsb-release -y -qq \
-    && sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
-
-RUN sudo /bin/bash -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null'
-
 # Source ROS2
 RUN echo "\n alias gzkill='pkill -f gzclient; pkill -f gzserver; pkill -f gazebo'" >> ~/.bashrc \
     && echo "\nalias roskill='for i in \$(pgrep -f ros/\$ROS_DISTRO); do kill \$i; done'" >> ~/.bashrc \
@@ -120,7 +106,7 @@ RUN sudo apt install -y -qq xsel xclip
 
 # Setup color prompt and git
 RUN echo "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\\\1)/'\n}" >> ~/.bashrc \
-        && echo "\nPS1='🐳\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
+        && echo "\nPS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u\[\033[01;36m\]U20🐳\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
         && sed -ie 's|#    . /etc/bash_completion|. /etc/bash_completion|g' ~/.bashrc 
 
 # Setup Vim

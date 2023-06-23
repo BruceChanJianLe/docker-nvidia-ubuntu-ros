@@ -1,29 +1,11 @@
-# Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
-FROM nvidia/cudagl:11.4.0-devel-ubuntu20.04
+# Ubuntu 20.04 non-nvidia (ros1 and ros2)
+FROM ros:noetic-ros-base-focal
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
 LABEL maintainer="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
 LABEL website="https://github.com/BruceChanJianLe/docker-nvidia-ubuntu-ros"
 LABEL license="MIT"
-
-# Set Nvidia environment
-ENV NVIDIA_VISIBLE_DEVICES \
-    ${NVIDIA_VISIBLE_DEVICES:-all}
-ENV NVIDIA_DRIVER_CAPABILITIES \
-    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
-
-# ENVIRONMENT STUFF FOR CUDA
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/cuda/lib64
-ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
-ENV PATH=/usr/local/cuda/bin:$PATH
-ENV CUDA_ROOT /usr/local/cuda
-
-# recommended from nvidia to use the cuda devices
-ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 # Set colorful prompt
 ENV TERM xterm-256color
@@ -107,51 +89,39 @@ RUN sudo /bin/bash -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/u
 
 RUN sudo apt update -y -qq \
     && sudo apt upgrade -y -qq \
-    && sudo DEBIAN_FRONTEND=noninteractive apt install ros-galactic-desktop -y -qq
+    && sudo DEBIAN_FRONTEND=noninteractive apt install ros-foxy-desktop ros-galactic-desktop -y -qq
 
-# Update Gazebo 11
-RUN sudo /bin/bash -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' \
-    && wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - \
-    && sudo apt-get update -qq \
-    && sudo apt-get install -y -qq \
-    gazebo11 \
-    && sudo apt-get upgrade -y -qq
+# Source ROS2 Galactic
+RUN echo "\n alias gzkill='pkill -f gzclient; pkill -f gzserver; pkill -f gazebo'" >> ~/.bashrc \
+    && echo "\nalias roskill='for i in \$(pgrep -f ros/\$ROS_DISTRO); do kill \$i; done'" >> ~/.bashrc \
+    && echo "\nalias galactic='. ~/.galactic_env'" >> ~/.bashrc \
+    && echo "\nalias foxy='. ~/.foxy_env'" >> ~/.bashrc
 
-# Source ROS2
-RUN echo "\nalias gazebokill='killall -9 gazebo & killall -9 gzserver & killall -9 gzclient'" >> ~/.bashrc \
-    && echo "\nalias roskill='for i in $(pgrep -f melodic); do kill $i; done'" >> ~/.bashrc \
-    && echo "\nalias ross2='. ~/.ros2_env'" >> ~/.bashrc
-RUN touch ~/.ros2_env \
-    && echo "source /opt/ros/galactic/setup.bash" >> ~/.ros2_env
+RUN touch ~/.galactic_env \
+    && echo "source /opt/ros/galactic/setup.bash" >> ~/.galactic_env
  
+RUN touch ~/.foxy_env \
+    && echo "source /opt/ros/foxy/setup.bash" >> ~/.foxy_env
+
 # Installing Colcon
 RUN sudo /bin/sh -c 'echo "deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list' \
     && curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add - \
     && sudo apt update -y -qq \
     && sudo apt install -y -qq python3-colcon-common-extensions
 
-RUN echo "\nsource /usr/share/colcon_cd/function/colcon_cd.sh" >> ~/.ros2_env \
-    && echo "\nsource /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.ros2_env
+RUN echo "source /usr/share/gazebo/setup.sh" >> ~/.galactic_env \
+    && echo "\nsource /usr/share/colcon_cd/function/colcon_cd.sh" >> ~/.galactic_env \
+    && echo "\nsource /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.galactic_env
+
+RUN echo "source /usr/share/gazebo/setup.sh" >> ~/.foxy_env \
+    && echo "\nsource /usr/share/colcon_cd/function/colcon_cd.sh" >> ~/.foxy_env \
+    && echo "\nsource /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.foxy_env
 
 # Installing Rosdep
 RUN sudo apt update -y -qq \
     && sudo DEBIAN_FRONTEND=noninteractive apt install python3-rosdep -y -qq \
     && sudo rosdep init \
     && rosdep update
-
-# Install ROS1
-RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
-    && sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
-    && sudo apt-get update -qq \
-    && sudo apt-get install -y -qq \
-    ros-noetic-desktop \
-    python3-rosdep \
-    python3-rosinstall \
-    python3-rosinstall-generator \
-    python3-wstool \
-    # Do not init if already done in ROS2
-    # && sudo rosdep init \
-    && sudo apt-get clean -qq
 
 # Source ROS1
 RUN echo "\nalias ross='. ~/.ros_env'" >> ~/.bashrc
@@ -168,13 +138,13 @@ RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_
         && echo "BASE16_SHELL=\"\$HOME/.config/base16-shell/\"" >> ~/.bashrc \
         && echo "[ -n \"\$PS1\" ] && \\"  >> ~/.bashrc \
         && echo "    [ -s \"\$BASE16_SHELL/profile_helper.sh\" ] && \\"  >> ~/.bashrc \
-        && echo "        eval \"\$(\"\$BASE16_SHELL/profile_helper.sh\")\"" >> ~/.bashrc
+        && echo "        source \"\$BASE16_SHELL/profile_helper.sh\"" >> ~/.bashrc
 
 RUN sudo apt install -y -qq xsel xclip
 
 # Setup color prompt and git
 RUN echo "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\\\1)/'\n}" >> ~/.bashrc \
-        && echo "\nPS1='🐳\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
+        && echo "\nPS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u\[\033[01;36m\]U20🐳\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
         && sed -ie 's|#    . /etc/bash_completion|. /etc/bash_completion|g' ~/.bashrc 
 
 # Setup Vim
