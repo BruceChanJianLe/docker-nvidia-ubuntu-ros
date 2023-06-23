@@ -119,8 +119,6 @@ RUN echo "source /usr/share/gazebo/setup.sh" >> ~/.foxy_env \
 
 # Installing Rosdep
 RUN sudo apt update -y -qq \
-    && sudo DEBIAN_FRONTEND=noninteractive apt install python3-rosdep -y -qq \
-    && sudo rosdep init \
     && rosdep update
 
 # Source ROS1
