@@ -79,7 +79,7 @@ RUN mkdir -p /home/$USERNAME/docker_mount
 
 # ROS aliases
 RUN echo "\n alias gzkill='pkill -f gzclient; pkill -f gzserver; pkill -f gazebo'" >> ~/.bashrc \
-    && echo "\nalias roskill='for i in \$(pgrep -f ros/\$ROS_DISTRO); do kill \$i; done'" >> ~/.bashrc \
+    && echo "\nalias roskill='for i in \$(pgrep -f ros/\$ROS_DISTRO); do kill \$i; done'" >> ~/.bashrc
 
 # Setup tmux and vim
 RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_Setup/master/.tmux.conf \
