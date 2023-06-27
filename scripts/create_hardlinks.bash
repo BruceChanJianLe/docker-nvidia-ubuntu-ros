@@ -1,26 +1,22 @@
 #!/usr/bin/env bash
 # This script setup hardlinks for docker containers as udev does not work
-# WARNING #
-# Run this script before starting/restarting a container
+# ATTENTION: Run this script before starting/restarting a container
 
+# For consistency, all hardlinks are inside /dev/docker
 # Verify hardlink docker dir exist
 cd /dev/
 if [[ ! -d "docker" ]]; then
   sudo mkdir docker
 fi
 
-# Files to create hardlinks
+# Create hardlinks based on symbolic links from udev
 HLINKS=(
-  "bms_battery"
-  "bms_charger"
-  "sam_controller"
-  "motor_controller"
+  "sonar"
+  "/input/joywireless"
 )
 
-SLINKS=$(find . -type l -ls)
-
-
 for STR in ${HLINKS[@]}; do
+  # Skip if link already exist
   if [[ ! -c "docker/$STR" ]]; then
     find . -type l -ls | grep $STR &> /dev/null
     if [[ $? = 0 ]]; then
@@ -28,7 +24,8 @@ for STR in ${HLINKS[@]}; do
       sudo ln $THE_LINK docker/$STR
       echo "Successful created hardlink for "$STR
     else
-      echo "Failed to creat hardlink for "$STR
+      # Symbolic link may not exist
+      echo "Failed to find "$STR" for hardlink creation."
     fi
   else
     echo "Skipping hardlink for "$STR" as it already exist."
