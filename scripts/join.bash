@@ -7,12 +7,18 @@ declare -a arr
 i=0
 
 # Make container name into an array
-containers=$(docker ps -a | awk '{if(NR>1) print$NF}')
-for container in $containers
-do
+containers=$(docker ps -a | grep Up | awk '{print$NF}')
+if [[ -z $containers ]]
+then
+  echo "  - No running containers found, to start/restart a container, use the start/restart scripts."
+  exit 0
+else
+  for container in $containers
+  do
     arr[$i]=$container
     let "i+=1"
-done
+  done
+fi
 
 # Loop through name array
 let "i-=1"
