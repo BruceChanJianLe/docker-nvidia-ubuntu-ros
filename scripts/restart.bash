@@ -8,6 +8,9 @@
 
 # Remove previous docker xauth
 sudo rm -rf /tmp/.docker.xauth
+if [ $? ]; then
+  exit -1
+fi
 
 # Display all container's name
 echo "List of containers:"
