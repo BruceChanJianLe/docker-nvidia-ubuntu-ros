@@ -8,7 +8,7 @@
 
 # Remove previous docker xauth
 sudo rm -rf /tmp/.docker.xauth
-if [ $? ]; then
+if [ $? -ne 0 ]; then
   exit -1
 fi
 
