@@ -1,18 +1,16 @@
-name: U20 ROS 1 Docker Image CI (non nvidia)
+name: U20 ROS1 Docker Image CI (non nvidia)
 
 on:
   push:
     branches: [ "master" ]
     paths:
       - 'docker_build/u20/non_nvidia/ros1/**'
-  # pull_request:
-  #   branches: [ "master" ]
 
 jobs:
 
   build:
 
-    runs-on: ubuntu-20.04 # ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
