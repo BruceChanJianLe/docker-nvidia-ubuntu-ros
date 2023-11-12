@@ -1,0 +1,20 @@
+name: U20 ROS 1 Docker Image CI (non nvidia)
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'docker_build/u20/non_nvidia/ros1/**'
+  # pull_request:
+  #   branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-20.04 # ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image for U20 ROS1 (non nvidia)
+      run: docker build --rm -t ubuntu20.04:ros --build-arg user_id=$user_id -f docker_build/u20/non_nvidia/ros1/Dockerfile .
