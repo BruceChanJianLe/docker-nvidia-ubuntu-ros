@@ -43,6 +43,8 @@ RUN apt-get update -qq \
     curl \
     htop \
     bash-completion \
+    bc \
+    ansible \
     && apt-get clean -qq
 
 # Add a user with the same user_id as the user outside of the container
