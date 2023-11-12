@@ -119,3 +119,4 @@ RUN sudo apt-get autoclean -y -qq \
 
 # Run colorful prompt
 CMD ["/bin/bash", "-l" ]
+
