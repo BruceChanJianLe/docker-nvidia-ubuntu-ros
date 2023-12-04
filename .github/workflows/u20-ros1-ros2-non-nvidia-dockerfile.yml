@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - 'docker_build/u20/non_nvidia/ros1_ros2/**'
+      - 'docker_build/u20/non_nvidia/ros3/**'
 
 jobs:
 
@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image for U20 ROS1 ROS2 (non nvidia)
-      run: docker build --rm -t ubuntu20.04:ros --build-arg user_id=$(id -u) -f docker_build/u20/non_nvidia/ros1_ros2/Dockerfile .
+      run: docker build --rm -t ubuntu20.04:ros --build-arg user_id=$(id -u) -f docker_build/u20/non_nvidia/ros3/Dockerfile .
