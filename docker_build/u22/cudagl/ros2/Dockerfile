@@ -104,8 +104,8 @@ RUN sudo apt update -y -qq \
     && sudo rosdep init \
     && rosdep update
 
-# Setup dotfiles, Please fun this manually after
-# RUN ansible-pull -U https://github.com/brucechanjianle/ansible -e "dotfile_branch=docker"
+# Setup dotfiles
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible -e "dotfile_branch=docker" -v
 
 # config & cleanup
 RUN sudo apt-get autoclean -y -qq \
