@@ -5,9 +5,16 @@ This repository demonstrates the steps to setup docker nvidia on ubuntu with ROS
 ## Building the Dockerfile
 
 Run the `build.bash` in the scripts directory. Follow the instructions to build the docker image.  
+version 0.0.1
 ```bash
 cd scripts
 ./build.bash
+```
+
+newer version. Please use the help flag for more information.
+```bash
+cd scripts
+./build.bash -u 22 -r 2 -g true -c true
 ```
 
 ## Viewing Docker images
@@ -25,7 +32,12 @@ docker images
 Run the `start.bash` in the scripts directory. Follow the instructions to get the images running.  
 ```bash
 cd scripts
-./start.bash
+# For Ubunut 18
+./start18.bash
+# For Ubunut 20
+./start20.bash
+# For Ubunut 22
+./start22.bash
 ```
 
 ## Restarting the Container (after reboot)
