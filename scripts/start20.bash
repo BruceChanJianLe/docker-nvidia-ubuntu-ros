@@ -52,16 +52,16 @@ read -p "NVIDIA Images / Non-NVIDIA images [Y/n]? " value
 if [[ -z $value || $value == y || $value == Y ]]
 then
 
-  read -p "Select container image to start ubuntu20.04:cnvros/ubuntu20.04:cnvros2/ubuntu20.04:cnvros1ros2 [1/2/3]? " value
+  read -p "Select container image to start ubuntu20.04:cnvros1/ubuntu20.04:cnvros2/ubuntu20.04:cnvros3 [1/2/3]? " value
   if [[ -z $value || $value == 1 ]]
   then
-      image="ubuntu20.04:cnvros"
+      image="ubuntu20.04:cnvros1"
   elif [[ $value == 2 ]]
   then
       image="ubuntu20.04:cnvros2"
   elif [[ $value == 3 ]]
   then
-      image="ubuntu20.04:cnvros1ros2"
+      image="ubuntu20.04:cnvros3"
   fi
 
   # Start docker container
@@ -87,16 +87,16 @@ then
 
 else
 
-  read -p "Select container image to start ubuntu20.04:ros/ubuntu20.04:ros2/ubuntu20.04:ros1ros2 [1/2/3]? " value
+  read -p "Select container image to start ubuntu20.04:ros1/ubuntu20.04:ros2/ubuntu20.04:ros3 [1/2/3]? " value
   if [[ -z $value || $value == 1 ]]
   then
-      image="ubuntu20.04:ros"
+      image="ubuntu20.04:ros1"
   elif [[ $value == 2 ]]
   then
       image="ubuntu20.04:ros2"
   elif [[ $value == 3 ]]
   then
-      image="ubuntu20.04:ros1ros2"
+      image="ubuntu20.04:ros3"
   fi
 
   # Start docker container

@@ -1,86 +1,104 @@
 #!/usr/bin/env bash
 # This script builds the docker image
 
-# Obtain Ubuntu version
-read -p "Select the Ubuntu version you wish to build upon[18/20]:" version
+usage() {
+  cat <<EOF
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-u] [-r] [-g] [-c]
+Script description here.
+Available options:
+-h, --help      Print this help and exit
+-u, --ubuntu    Set Ubuntu version [18/20/22], default 22
+-r, --ros       Set ROS version ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3], default 3
+-g, --gpu       Set true or false for nvidia gpu capabilities, default true
+-c, --cuda      Set true or false for cuda capabilities, default true
+EOF
+  exit
+}
 
-if [[ $version == 18 ]]
-then
-    # Cuda selection
-    read -p "Do you want to have cuda for your Ubuntu18.04?[Y/n]" value
+msg() {
+  echo >&2 -e "${1-}"
+}
 
-    # Verify cuda check
-    if [[ -z $value || $value == y || $value == Y ]]
-    then
-        user_id=$(id -u)
-        docker build --rm -t "ubuntu18.04:cnvros" --build-arg user_id=$user_id -f ../docker_build/u18/cudagl/Dockerfile .
-    else
-        # To build or not to build
-        read -p "This script will build docker image ubuntu18.04:nvros continue[Y/n]? " value
+die() {
+  local msg=$1
+  local code=${2-1} # default exit status 1
+  msg "$msg"
+  msg "Use -h for more information"
+  exit "$code"
+}
 
-        # Verify build check
-        if [[ -z $value || $value == y || $value == Y ]]
-        then
-            user_id=$(id -u)
-            docker build --rm -t "ubuntu18.04:nvros" --build-arg user_id=$user_id -f ../docker_build/u18/Dockerfile .
-        else
-            exit 1
-        fi
-    fi
-elif [[ $version == 20 ]]
-then
-    # NVIDIA or NON-NVIDIA
-    read -p "This script will build docker image with NVIDIA contunue[Y/n]? " value
+parse_params() {
 
-    # Verify NVIDIA check
-    if [[ -z $value || $value == y || $value == Y ]]
-    then
-      # To build or not to build
-      read -p "This script will build docker image ubuntu20.04:cnvros contunue[Y/n]? " value
+  # Print help if no input as this is a new build script
+  if test $# -eq 0 
+  then
+    echo "help me ob1"
+    usage
+  fi
 
-      # Verify build check
-      if [[ -z $value || $value == y || $value == Y ]]
+  # default values of variables set from params
+  UBUNTU_VERSION="22"
+  ROS_VERSION="3"
+  ENABLE_GPU="true"
+  ENABLE_CUDA="true"
+  IS_EMPTY=0
+
+  while test $# -gt 0; do
+    case $1 in
+    -h | --help) usage ;;
+    -u | --ubuntu)
+      shift
+      if [[ $1 == "18" || $1 == "20" || $1 == "22" ]]
       then
-          # Select which version of ROS
-          read -p "Select ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3]? " value
-          if [[ -z $value || $value == 1 ]]
-          then
-              user_id=$(id -u)
-              docker build --rm -t ubuntu20.04:cnvros --build-arg user_id=$user_id -f ../docker_build/u20/cudagl/ros1/Dockerfile .
-          elif [[ $value == 2 ]]
-          then
-              user_id=$(id -u)
-              docker build --rm -t ubuntu20.04:cnvros2 --build-arg user_id=$user_id -f ../docker_build/u20/cudagl/ros2/Dockerfile .
-          elif [[ $value == 3 ]]
-          then
-              user_id=$(id -u)
-              docker build --rm -t ubuntu20.04:cnvros1ros2 --build-arg user_id=$user_id -f ../docker_build/u20/cudagl/ros1_ros2/Dockerfile .
-          else
-              echo "Invalid selection, nothing will be built."
-          fi
+        UBUNTU_VERSION=$1
       else
-          exit 1
+        die "-u accepts [18/20/22]."
       fi
-    else
-      # Select which version of ROS
-      read -p "Select ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3]? " value
-      if [[ -z $value || $value == 1 ]]
+      ;;
+    -r | --ros)
+      shift
+      if [[ $1 == "1" || $1 == "2" || $1 == "3" ]]
       then
-        user_id=$(id -u)
-        docker build --rm -t ubuntu20.04:ros --build-arg user_id=$user_id -f ../docker_build/u20/non_nvidia/ros1/Dockerfile .
-      elif [[ $value == 2 ]]
-      then
-        user_id=$(id -u)
-        docker build --rm -t ubuntu20.04:ros2 --build-arg user_id=$user_id -f ../docker_build/u20/non_nvidia/ros2/Dockerfile .
-      elif [[ $value == 3 ]]
-      then
-        user_id=$(id -u)
-        docker build --rm -t ubuntu20.04:ros1ros2 --build-arg user_id=$user_id -f ../docker_build/u20/non_nvidia/ros1_ros2/Dockerfile .
+        ROS_VERSION=$1
       else
-        echo "Invalid selection, nothing will be built."
+        die "-r accepts ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3]."
       fi
-    fi
+      ;;
+    -g | --gpu)
+      shift
+      if [[ $1 == "true" || $1 == "false" ]]
+      then
+        ENABLE_GPU=$1
+      else
+        die "-g only accepts true or false."
+      fi
+      ;;
+    -c | --cuda)
+      shift
+      if [[ $1 == "true" || $1 == "false" ]]
+      then
+        ENABLE_CUDA=$1
+      else
+        die "-c only accepts true or false."
+      fi
+      ;;
+    -?*) die "Unknown option: $1" ;;
+    *) break ;;
+    esac
+    shift
+  done
+
+  return 0
+}
+
+parse_params "$@"
+
+user_id=$(id -u)
+if [[ $ENABLE_GPU == "true" || $ENABLE_CUDA == "true" ]]
+then
+  # Build with cuda nvidia
+  docker build --rm -t ubuntu$UBUNTU_VERSION.04:cnvros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl/ros$ROS_VERSION/Dockerfile .
 else
-    # Ubuntu version not supported
-    echo -e "The Ubuntu version you have selected "$version" is currently not supported."
+  # Build without nvidia
+  docker build --rm -t ubuntu$UBUNTU_VERSION.04:ros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl/ros$ROS_VERSION/Dockerfile .
 fi
