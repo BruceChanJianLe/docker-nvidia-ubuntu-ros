@@ -85,31 +85,18 @@ RUN mkdir -p /home/$USERNAME/docker_mount
 
 # Export noninterative
 RUN export DEBIAN_FRONTEND=noninteractive \
- && sudo apt-get update -qq \
- && sudo -E apt-get install -y -qq \
-    tzdata \
- && echo 'Etc/UTC' > sudo tee /etc/timezone \
+ && export TZ=Etc/UTC \
  && sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime \
- && sudo dpkg-reconfigure --frontend noninteractive tzdata \
- && sudo apt-get clean -qq
+ && sudo -E apt-get update -qq \
+ && sudo -E apt-get install -y -qq --no-install-recommends tzdata \
+ && sudo -E dpkg-reconfigure --frontend noninteractive tzdata \
+ && sudo -E apt-get clean -qq
 
-# Install ROS2
-RUN sudo apt update -y -qq \
-    && sudo apt upgrade -y -qq \
-    && sudo apt install locales -y -qq \
-    && sudo locale-gen en_US en_US.UTF-8 \
-    && sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
-    && export LANG=en_US.UTF-8 \
-    && sudo apt install software-properties-common -y -qq \
-    && sudo add-apt-repository universe \
-    && sudo apt update -y -qq && sudo apt install curl gnupg lsb-release -y -qq \
-    && sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
+# Install ROS2 Foxy
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=foxy"
 
-RUN sudo /bin/bash -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null'
-
-RUN sudo apt update -y -qq \
-    && sudo apt upgrade -y -qq \
-    && sudo DEBIAN_FRONTEND=noninteractive apt install ros-galactic-desktop -y -qq
+# Install ROS2 Galactic
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=galactic"
 
 # Update Gazebo 11
 RUN sudo /bin/bash -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' \
@@ -119,29 +106,7 @@ RUN sudo /bin/bash -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu
     gazebo11 \
     && sudo apt-get upgrade -y -qq
 
-# Source ROS2
-RUN echo "\nalias gazebokill='killall -9 gazebo & killall -9 gzserver & killall -9 gzclient'" >> ~/.bashrc \
-    && echo "\nalias roskill='for i in $(pgrep -f melodic); do kill $i; done'" >> ~/.bashrc \
-    && echo "\nalias ross2='. ~/.ros2_env'" >> ~/.bashrc
-RUN touch ~/.ros2_env \
-    && echo "source /opt/ros/galactic/setup.bash" >> ~/.ros2_env
- 
-# Installing Colcon
-RUN sudo /bin/sh -c 'echo "deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list' \
-    && curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add - \
-    && sudo apt update -y -qq \
-    && sudo apt install -y -qq python3-colcon-common-extensions
-
-RUN echo "\nsource /usr/share/colcon_cd/function/colcon_cd.sh" >> ~/.ros2_env \
-    && echo "\nsource /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.ros2_env
-
-# Installing Rosdep
-RUN sudo apt update -y -qq \
-    && sudo DEBIAN_FRONTEND=noninteractive apt install python3-rosdep -y -qq \
-    && sudo rosdep init \
-    && rosdep update
-
-# Install ROS1
+# # Install ROS1
 RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
     && sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
     && sudo apt-get update -qq \
@@ -152,38 +117,11 @@ RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release 
     python3-rosinstall-generator \
     python3-wstool \
     # Do not init if already done in ROS2
-    # && sudo rosdep init \
+    && sudo rosdep init \
     && sudo apt-get clean -qq
 
-# Source ROS1
-RUN echo "\nalias ross='. ~/.ros_env'" >> ~/.bashrc
-RUN touch ~/.ros_env \
-    && echo "source /opt/ros/noetic/setup.bash" >> ~/.ros_env
-
-# Setup tmux and vim
-RUN curl -o ~/.tmux.conf https://raw.githubusercontent.com/BruceChanJianLe/TMUX_Setup/master/.tmux.conf \
-        && curl https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux > ~/.bash_completion \
-        && echo "source ~/.bash_completion" >> ~/.bashrc \
-        && curl -o ~/.vimrc https://raw.githubusercontent.com/BruceChanJianLe/vim/master/.vimrc \
-        && git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell \
-        && echo "\n# Base16 Shell" >> ~/.bashrc \
-        && echo "BASE16_SHELL=\"\$HOME/.config/base16-shell/\"" >> ~/.bashrc \
-        && echo "[ -n \"\$PS1\" ] && \\"  >> ~/.bashrc \
-        && echo "    [ -s \"\$BASE16_SHELL/profile_helper.sh\" ] && \\"  >> ~/.bashrc \
-        && echo "        source \"\$BASE16_SHELL/profile_helper.sh\"" >> ~/.bashrc
-
-RUN sudo apt install -y -qq xsel xclip
-
-# Setup color prompt and git
-RUN echo "\nparse_git_branch() {\n git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\\\1)/'\n}" >> ~/.bashrc \
-        && echo "\nPS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u\[\033[01;36m\]U20🐳\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(parse_git_branch)\[\033[00m\]\$ '" >> ~/.bashrc \
-        && sed -ie 's|#    . /etc/bash_completion|. /etc/bash_completion|g' ~/.bashrc 
-
-# Setup Vim
-RUN mkdir -p ~/.vim/undodir \
-        && curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-RUN vim +PlugInstall +qa
+# Setup dotfiles
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible -e "dotfile_branch=docker" -v
 
 # config & cleanup
 RUN sudo apt-get autoclean -y -qq \
