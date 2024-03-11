@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - 'docker_build/u18/**'
+      - 'docker_build/u18/opengl/**'
 
 jobs:
 
@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image for U18 ROS1 (opengl)
-      run: docker build --rm -t test_image --build-arg user_id=$(id -u) -f docker_build/u18/Dockerfile .
+      run: docker build --rm -t test_image --build-arg user_id=$(id -u) -f docker_build/u18/opengl/Dockerfile .
