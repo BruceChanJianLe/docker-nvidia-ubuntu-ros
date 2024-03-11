@@ -100,5 +100,5 @@ then
   docker build --rm -t ubuntu$UBUNTU_VERSION.04:cnvros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl/ros$ROS_VERSION/Dockerfile .
 else
   # Build without nvidia
-  docker build --rm -t ubuntu$UBUNTU_VERSION.04:ros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl/ros$ROS_VERSION/Dockerfile .
+  docker build --rm -t ubuntu$UBUNTU_VERSION.04:ros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/non_nvidia/ros$ROS_VERSION/Dockerfile .
 fi

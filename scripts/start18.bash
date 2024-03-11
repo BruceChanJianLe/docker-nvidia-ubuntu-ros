@@ -36,7 +36,7 @@ then
     if ! dpkg --list | grep nvidia-docker2
     then
         echo "Please either update docker-ce to a version greater than 19.03 or install nvidia-docker2"
-	exit 1
+        exit 1
     fi
     DOCKER_OPTS="--runtime=nvidia"
 else
@@ -44,94 +44,81 @@ else
 fi
 
 # Start docker container
-echo -e "Starting container image ubuntu18.04:nvros/cnros"
-read -p "Would you like to start with cuda?[y/N]" cuda
-read -p "Would you like to auto start this container upon reboot?[Y/n]" value
+image=""
 
-read -p "Container name: " CONTAINERNAME
+read -p "NVIDIA Images / Non-NVIDIA images [Y/n]? " value
 
-if [[ -z $cuda || $cuda == n || $cuda == N ]]
+# Verify NVIDIA check
+if [[ -z $value || $value == y || $value == Y ]]
 then
-    # Verify build check
-    if [[ -z $value || $value == y || $value == Y ]]
-    then
-        docker run -it \
-          -d \
-          -e DISPLAY \
-          -e QT_X11_NO_MITSHM=1 \
-          -e XAUTHORITY=$XAUTH \
-          -v "$XAUTH:$XAUTH" \
-          -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-          -v "/etc/localtime:/etc/localtime:ro" \
-          -v "/dev/input:/dev/input" \
-          -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-          --network host \
-          --privileged \
-          --security-opt seccomp=unconfined \
-          --name $CONTAINERNAME \
-          --cap-add=SYS_PTRACE \
-          --restart unless-stopped \
-          $DOCKER_OPTS \
-          ubuntu18.04:nvros
-    else
-        docker run -it \
-          -d \
-          -e DISPLAY \
-          -e QT_X11_NO_MITSHM=1 \
-          -e XAUTHORITY=$XAUTH \
-          -v "$XAUTH:$XAUTH" \
-          -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-          -v "/etc/localtime:/etc/localtime:ro" \
-          -v "/dev/input:/dev/input" \
-          -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-          --network host \
-          --privileged \
-          --security-opt seccomp=unconfined \
-          --name $CONTAINERNAME \
-          --cap-add=SYS_PTRACE \
-          $DOCKER_OPTS \
-          ubuntu18.04:nvros
-    fi
-elif [[ $cuda == y || $cuda == Y ]]
-then
-    # Verify build check
-    if [[ -z $value || $value == y || $value == Y ]]
-    then
-        docker run -it \
-          -d \
-          -e DISPLAY \
-          -e QT_X11_NO_MITSHM=1 \
-          -e XAUTHORITY=$XAUTH \
-          -v "$XAUTH:$XAUTH" \
-          -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-          -v "/etc/localtime:/etc/localtime:ro" \
-          -v "/dev/input:/dev/input" \
-          -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-          --network host \
-          --privileged \
-          --security-opt seccomp=unconfined \
-          --name $CONTAINERNAME \
-          --cap-add=SYS_PTRACE \
-          --restart unless-stopped \
-          $DOCKER_OPTS \
-          ubuntu18.04:cnvros
-    else
-        docker run -it \
-          -d \
-          -e DISPLAY \
-          -e QT_X11_NO_MITSHM=1 \
-          -e XAUTHORITY=$XAUTH \
-          -v "$XAUTH:$XAUTH" \
-          -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-          -v "/etc/localtime:/etc/localtime:ro" \
-          -v "/dev/input:/dev/input" \
-          -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-          --network host \
-          --privileged \
-          --security-opt seccomp=unconfined \
-          --name $CONTAINERNAME \
-          --cap-add=SYS_PTRACE \
-          $DOCKER_OPTS \
-          ubuntu18.04:cnvros
-    fi
+
+  read -p "Select container image to start ubuntu20.04:cnvros1/ubuntu20.04:cnvros2/ubuntu20.04:cnvros3 [1/2/3]? " value
+  if [[ -z $value || $value == 1 ]]
+  then
+      image="ubuntu18.04:cnvros1"
+  elif [[ $value == 2 ]]
+  then
+      image="ubuntu18.04:cnvros2"
+  elif [[ $value == 3 ]]
+  then
+      image="ubuntu18.04:cnvros3"
+  fi
+
+  # Start docker container
+  read -p "Container name: " CONTAINERNAME
+
+  docker run -it \
+    -d \
+    -e DISPLAY \
+    -e QT_X11_NO_MITSHM=1 \
+    -e XAUTHORITY=$XAUTH \
+    -v "$XAUTH:$XAUTH" \
+    -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+    -v "/etc/localtime:/etc/localtime:ro" \
+    -v "/dev/input:/dev/input" \
+    -v "/dev/media:/dev/media" \
+    -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+    --network host \
+    --privileged \
+    --security-opt seccomp=unconfined \
+    --name $CONTAINERNAME \
+    --cap-add=SYS_PTRACE \
+    $DOCKER_OPTS \
+    $image
+
+else
+
+  read -p "Select container image to start ubuntu20.04:ros1/ubuntu20.04:ros2/ubuntu20.04:ros3 [1/2/3]? " value
+  if [[ -z $value || $value == 1 ]]
+  then
+      image="ubuntu20.04:ros1"
+  elif [[ $value == 2 ]]
+  then
+      image="ubuntu20.04:ros2"
+  elif [[ $value == 3 ]]
+  then
+      image="ubuntu20.04:ros3"
+  fi
+
+  # Start docker container
+  read -p "Container name: " CONTAINERNAME
+
+  docker run -it \
+    -d \
+    -e DISPLAY \
+    -e QT_X11_NO_MITSHM=1 \
+    -e XAUTHORITY=$XAUTH \
+    -v "$XAUTH:$XAUTH" \
+    -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+    -v "/etc/localtime:/etc/localtime:ro" \
+    -v "/dev/input:/dev/input" \
+    -v "/dev/media:/dev/media" \
+    -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+    --network host \
+    --privileged \
+    --security-opt seccomp=unconfined \
+    --name $CONTAINERNAME \
+    --cap-add=SYS_PTRACE \
+    $image
+
 fi

@@ -36,7 +36,7 @@ then
     if ! dpkg --list | grep nvidia-docker2
     then
         echo "Please either update docker-ce to a version greater than 19.03 or install nvidia-docker2"
-	exit 1
+        exit 1
     fi
     DOCKER_OPTS="--runtime=nvidia"
 else
@@ -76,6 +76,7 @@ then
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev/input:/dev/input" \
+    -v "/dev/media:/dev/media" \
     -v $(pwd)/../docker_mount:/home/developer/docker_mount \
     --network host \
     --privileged \
@@ -111,6 +112,7 @@ else
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev/input:/dev/input" \
+    -v "/dev/media:/dev/media" \
     -v $(pwd)/../docker_mount:/home/developer/docker_mount \
     --network host \
     --privileged \
@@ -120,4 +122,3 @@ else
     $image
 
 fi
-
