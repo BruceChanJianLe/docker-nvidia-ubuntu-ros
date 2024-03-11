@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image for U18 ROS1 (cudagl)
-      run: docker build --rm -t test_image --build-arg user_id=$(id -u) -f docker_build/u18/cudagl/Dockerfile .
+      run: docker build --rm -t test_image --build-arg user_id=$(id -u) -f docker_build/u18/cudagl/ros1/Dockerfile .
