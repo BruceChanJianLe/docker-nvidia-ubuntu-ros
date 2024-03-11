@@ -7,11 +7,41 @@ LABEL maintainer="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
 LABEL website="https://github.com/BruceChanJianLe/docker-nvidia-ubuntu-ros"
 LABEL license="MIT"
 
+# Set Nvidia environment
+ENV NVIDIA_VISIBLE_DEVICES \
+    ${NVIDIA_VISIBLE_DEVICES:-all}
+ENV NVIDIA_DRIVER_CAPABILITIES \
+    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+
+# ENVIRONMENT STUFF FOR CUDA
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/cuda/lib64
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
+ENV PATH=/usr/local/cuda/bin:$PATH
+ENV CUDA_ROOT /usr/local/cuda
+
+# recommended from nvidia to use the cuda devices
+ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
 # Set colorful prompt
 ENV TERM xterm-256color
 
 # Set LANG in order to display emoji
 ENV LANG en_US.UTF-8
+
+# Export noninterative
+RUN export DEBIAN_FRONTEND=noninteractive \
+&& apt-get update \
+&& apt-get install --no-install-recommends -y \
+tzdata \
+&& ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime \
+&& dpkg-reconfigure --frontend noninteractive tzdata \
+&& apt-get clean -qq \
+&& apt-get install --no-install-recommends -y keyboard-configuration \
+&& dpkg-reconfigure --frontend noninteractive keyboard-configuration \
+&& apt-get clean -qq
 
 # Useful tools for development
 RUN apt-get update -qq \
@@ -68,19 +98,9 @@ WORKDIR /home/$USERNAME
 # Make a mounting directory
 RUN mkdir -p /home/$USERNAME/docker_mount
 
-# Export noninterative
-RUN export DEBIAN_FRONTEND=noninteractive \
- && sudo apt-get update -qq \
- && sudo -E apt-get install -y -qq \
-    tzdata \
- && echo 'Etc/UTC' > sudo tee /etc/timezone \
- && sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime \
- && sudo dpkg-reconfigure --frontend noninteractive tzdata \
- && sudo apt-get clean -qq
-
 # Install ROS 
 RUN sudo /bin/sh -c 'echo "deb [trusted=yes] http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
-    && sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
+    && curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add - \
     && sudo apt-get update -qq \
     && sudo apt-get install -y -qq \
     ros-melodic-desktop-full \
@@ -113,4 +133,3 @@ RUN sudo apt-get autoclean -y -qq \
 
 # Run colorful prompt
 CMD ["/bin/bash", "-l" ]
-
