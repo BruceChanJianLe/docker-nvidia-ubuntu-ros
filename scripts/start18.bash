@@ -52,7 +52,7 @@ read -p "NVIDIA Images / Non-NVIDIA images [Y/n]? " value
 if [[ -z $value || $value == y || $value == Y ]]
 then
 
-  read -p "Select container image to start ubuntu20.04:cnvros1/ubuntu20.04:cnvros2/ubuntu20.04:cnvros3 [1/2/3]? " value
+  read -p "Select container image to start ubuntu18.04:cnvros1/ubuntu18.04:cnvros2/ubuntu18.04:cnvros3 [1/2/3]? " value
   if [[ -z $value || $value == 1 ]]
   then
       image="ubuntu18.04:cnvros1"
