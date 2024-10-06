@@ -55,7 +55,7 @@ Run the `join.bash` in the scripts directory. Follow the instructions to join / 
 cd scripts
 ./join.bash
 ```
-The script uses `exec` instead of `attach` as this creates another process rather than using the already existed process.  
+The script uses `exec` instead of `attach` as this creates another process rather than using the already existing process.  
 
 ## Reference
 - nvidia opengl [link](https://hub.docker.com/r/nvidia/opengl)
