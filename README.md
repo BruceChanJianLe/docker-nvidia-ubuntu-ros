@@ -1,6 +1,17 @@
 # Docker Nvidia Ubuntu ROS
 
-This repository demonstrates the steps to setup docker nvidia on ubuntu with ROS in a container.  
+This repository demonstrates the steps to setup docker nvidia on ubuntu with ROS in a container.
+
+## Installing Docker and Nvidia Docker
+
+Use ansible to quickly automate the installation of Docker and Nvidia Docker.
+[Let's Go!](https://github.com/BruceChanJianLe/ansible-docker)
+
+```bash
+# For the impatient
+sudo apt install ansible git -y
+ansible-pull -U https://github.com/brucechanjianle/ansible-docker -K
+```
 
 ## Building the Dockerfile
 
