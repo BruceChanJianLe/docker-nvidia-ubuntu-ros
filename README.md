@@ -68,6 +68,16 @@ cd scripts
 ```
 The script uses `exec` instead of `attach` as this creates another process rather than using the already existing process.  
 
+## TODO
+
+Update Dockerfile:
+- ./docker_build/u18/opengl/Dockerfile
+- ./docker_build/u20/cudagl/ros2/Dockerfile
+- ./docker_build/u20/cudagl/ros2/Dockerfile
+- ./docker_build/u20/non_nvidia/ros1/Dockerfile
+- ./docker_build/u20/non_nvidia/ros2/Dockerfile
+- ./docker_build/u20/non_nvidia/ros3/Dockerfile
+
 ## Reference
 - nvidia opengl [link](https://hub.docker.com/r/nvidia/opengl)
 - nvidia-docker ubuntu ros dockerfil reference [link](https://github.com/osrf/subt/blob/master/docker/subt_sim_entry/Dockerfile)
