@@ -107,6 +107,9 @@ RUN sudo apt update -y -qq \
 # Setup dotfiles
 RUN ansible-pull -U https://github.com/brucechanjianle/ansible -e "dotfile_branch=docker" -v
 
+# Declare inside container
+ENV IN_DOCKER 1
+
 # config & cleanup
 RUN sudo apt-get autoclean -y -qq \
     && sudo apt-get autoremove -y -qq \
