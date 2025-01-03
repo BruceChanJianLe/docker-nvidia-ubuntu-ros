@@ -11,6 +11,9 @@ Available options:
 -r, --ros       Set ROS version ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3], default 3
 -g, --gpu       Set true or false for nvidia gpu capabilities, default true
 -c, --cuda      Set true or false for cuda capabilities, default true
+
+Example:
+./build.bash -u 22 -r 2 -g true -c true
 EOF
   exit
 }
