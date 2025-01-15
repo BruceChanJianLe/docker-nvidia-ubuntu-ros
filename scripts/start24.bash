@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # This script starts the docker container
 
+# Obtain version info
+source version_info
+
 # Requirement:
 # - docker
 # - nvidia-docker2
@@ -52,10 +55,10 @@ read -p "NVIDIA Images / Non-NVIDIA images [Y/n]? " value
 if [[ -z $value || $value == y || $value == Y ]]
 then
 
-  read -p "Would you like to start ubuntu24.04:cnvros2 [Y/n]? " value
+  read -p "Would you like to start ubuntu24.04:"$PACKAGE_VERSION"cnvros2 [Y/n]? " value
   if [[ -z $value || $value == y || $value == Y ]]
   then
-      image="ubuntu24.04:cnvros2"
+      image="ubuntu24.04:"$PACKAGE_VERSION"-cnvros2"
   else
       echo "No image selected!"
       exit 1
@@ -84,10 +87,10 @@ then
 
 else
 
-  read -p "Would you like to start ubuntu24.04:ros2 [Y/n]? " value
+  read -p "Would you like to start ubuntu24.04"$PACKAGE_VERSION":ros2 [Y/n]? " value
   if [[ -z $value || $value == y || $value == Y ]]
   then
-      image="ubuntu24.04:ros2"
+      image="ubuntu24.04:"$PACKAGE_VERSION"-ros2"
   else
       echo "No image selected!"
       exit 1
