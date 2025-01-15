@@ -29,10 +29,18 @@ done
 
 # Obtain container name
 read -p "Container name to be connected: " CONTAINERNAME
+read -p "Join with Bash / Zsh? [B/z] " value
+
+if [[ -z $value || $value == b || $value == B ]]
+then
+    DOCKER_SHELL=bash
+else
+    DOCKER_SHELL=zsh
+fi
 
 if [[ -z ${arr[$CONTAINERNAME]} ]]
 then
-    docker exec --privileged -e DISPLAY=${DISPLAY} -ti $CONTAINERNAME bash
+    docker exec --privileged -e DISPLAY=${DISPLAY} -ti $CONTAINERNAME $DOCKER_SHELL
 else
-    docker exec --privileged -e DISPLAY=${DISPLAY} -ti ${arr[$CONTAINERNAME]} bash
+    docker exec --privileged -e DISPLAY=${DISPLAY} -ti ${arr[$CONTAINERNAME]} $DOCKER_SHELL
 fi
