@@ -105,8 +105,8 @@ ENV LC_ALL en_US.UTF-8
 # Install ROS2
 # RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy"
 
-# Install Gazebo 11
-# RUN sudo apt-get install gazebo -y -qq
+# Install Gazebo
+# RUN sudo apt-get install ros-jazzy-ros-gz -y -qq
 
 # Installing Rosdep
 # RUN sudo apt update -y -qq \
