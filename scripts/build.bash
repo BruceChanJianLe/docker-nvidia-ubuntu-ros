@@ -7,10 +7,13 @@ Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-u] [-r] [-g] [-c]
 Script description here.
 Available options:
 -h, --help      Print this help and exit
--u, --ubuntu    Set Ubuntu version [18/20/22], default 22
+-u, --ubuntu    Set Ubuntu version [18/20/22/24], default 22
 -r, --ros       Set ROS version ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3], default 3
 -g, --gpu       Set true or false for nvidia gpu capabilities, default true
 -c, --cuda      Set true or false for cuda capabilities, default true
+
+Example:
+./build.bash -u 22 -r 2 -g true -c true
 EOF
   exit
 }
@@ -48,11 +51,11 @@ parse_params() {
     -h | --help) usage ;;
     -u | --ubuntu)
       shift
-      if [[ $1 == "18" || $1 == "20" || $1 == "22" ]]
+      if [[ $1 == "18" || $1 == "20" || $1 == "22" || $1 == "24" ]]
       then
         UBUNTU_VERSION=$1
       else
-        die "-u accepts [18/20/22]."
+        die "-u accepts [18/20/22/24]."
       fi
       ;;
     -r | --ros)
