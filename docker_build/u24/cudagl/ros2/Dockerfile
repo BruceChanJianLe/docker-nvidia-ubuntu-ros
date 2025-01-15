@@ -104,19 +104,19 @@ RUN export DEBIAN_FRONTEND=noninteractive \
  && sudo apt-get update && sudo apt-get install -y tzdata
 
 # Install ROS2
-# RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy" -vvvvv
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy"
 
-# Install Gazebo 11
-# RUN sudo apt-get install gazebo -y -qq
+# Install Gazebo Harmonic
+RUN sudo apt-get install ros-jazzy-ros-gz -y
 
 # Installing Rosdep
-# RUN sudo apt update -y -qq \
-#     && sudo DEBIAN_FRONTEND=noninteractive apt install python3-rosdep -y -qq \
-#     && sudo rosdep init \
-#     && rosdep update
+RUN sudo apt update -y -qq \
+    && sudo DEBIAN_FRONTEND=noninteractive apt install python3-rosdep -y -qq \
+    && sudo rosdep init \
+    && rosdep update
 
 # Setup dotfiles
-# RUN ansible-pull -U https://github.com/brucechanjianle/ansible
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible -v
 
 # Declare inside container
 ENV IN_DOCKER 1
@@ -125,6 +125,3 @@ ENV IN_DOCKER 1
 RUN sudo apt-get autoclean -y -qq \
     && sudo apt-get autoremove -y -qq \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/*
-
-# Run colorful prompt
-CMD ["/bin/bash", "-l" ]
