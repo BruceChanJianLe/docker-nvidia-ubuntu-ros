@@ -51,11 +51,11 @@ parse_params() {
     -h | --help) usage ;;
     -u | --ubuntu)
       shift
-      if [[ $1 == "18" || $1 == "20" || $1 == "22" ]]
+      if [[ $1 == "18" || $1 == "20" || $1 == "22" || $1 == "24" ]]
       then
         UBUNTU_VERSION=$1
       else
-        die "-u accepts [18/20/22]."
+        die "-u accepts [18/20/22/24]."
       fi
       ;;
     -r | --ros)
