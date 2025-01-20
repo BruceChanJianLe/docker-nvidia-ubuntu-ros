@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # This script starts the docker container
 
+# Obtain version info
+source version_info
+
 # Requirement:
 # - docker
 # - nvidia-docker2
@@ -52,16 +55,16 @@ read -p "NVIDIA Images / Non-NVIDIA images [Y/n]? " value
 if [[ -z $value || $value == y || $value == Y ]]
 then
 
-  read -p "Select container image to start ubuntu20.04:cnvros1/ubuntu20.04:cnvros2/ubuntu20.04:cnvros3 [1/2/3]? " value
+  read -p "Select container image to start ubuntu20.04:"$PACKAGE_VERSION"-cnvros1/ubuntu20.04:"$PACKAGE_VERSION"-cnvros2/ubuntu20.04:"$PACKAGE_VERSION"-cnvros3 [1/2/3]? " value
   if [[ -z $value || $value == 1 ]]
   then
-      image="ubuntu20.04:cnvros1"
+      image="ubuntu20.04:"$PACKAGE_VERSION"-cnvros1"
   elif [[ $value == 2 ]]
   then
-      image="ubuntu20.04:cnvros2"
+      image="ubuntu20.04:"$PACKAGE_VERSION"-cnvros2"
   elif [[ $value == 3 ]]
   then
-      image="ubuntu20.04:cnvros3"
+      image="ubuntu20.04:"$PACKAGE_VERSION"-cnvros3"
   fi
 
   # Start docker container
@@ -87,16 +90,16 @@ then
 
 else
 
-  read -p "Select container image to start ubuntu20.04:ros1/ubuntu20.04:ros2/ubuntu20.04:ros3 [1/2/3]? " value
+  read -p "Select container image to start ubuntu20.04:"$PACKAGE_VERSION"-ros1/ubuntu20.04:"$PACKAGE_VERSION"-ros2/ubuntu20.04:"$PACKAGE_VERSION"-ros3 [1/2/3]? " value
   if [[ -z $value || $value == 1 ]]
   then
-      image="ubuntu20.04:ros1"
+      image="ubuntu20.04:"$PACKAGE_VERSION"-ros1"
   elif [[ $value == 2 ]]
   then
-      image="ubuntu20.04:ros2"
+      image="ubuntu20.04:"$PACKAGE_VERSION"-ros2"
   elif [[ $value == 3 ]]
   then
-      image="ubuntu20.04:ros3"
+      image="ubuntu20.04:"$PACKAGE_VERSION"-ros3"
   fi
 
   # Start docker container
