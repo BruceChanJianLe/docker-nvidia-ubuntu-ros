@@ -1,5 +1,5 @@
 # Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
-FROM nvidia/cudagl:11.4.0-devel-ubuntu20.04
+FROM nvidia/cuda:12.4.1-devel-ubuntu20.04
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
@@ -30,6 +30,8 @@ ENV TERM xterm-256color
 
 # Set LANG in order to display emoji
 ENV LANG en_US.UTF-8
+# Require for ansible
+ENV LC_ALL C.UTF-8
 
 # Export noninterative
 RUN export DEBIAN_FRONTEND=noninteractive \
@@ -99,20 +101,10 @@ WORKDIR /home/$USERNAME
 RUN mkdir -p /home/$USERNAME/docker_mount
 
 # Install ROS
-RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
-    && sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
-    && sudo apt-get update -qq \
-    && sudo apt-get install -y -qq \
-    ros-noetic-desktop-full \
-    python3-rosdep \
-    python3-rosinstall \
-    python3-rosinstall-generator \
-    python3-wstool \
-    && sudo rosdep init \
-    && sudo apt-get clean -qq
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros -e "ros_distribution=noetic"
 
 # ROS DEP update
-RUN rosdep update
+RUN sudo rosdep init && rosdep update
 
 # Update Gazebo 11
 RUN sudo /bin/sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' \
@@ -122,9 +114,8 @@ RUN sudo /bin/sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-s
     gazebo11 \
     && sudo apt-get upgrade -y -qq
 
-
 # Setup dotfiles
-RUN ansible-pull -U https://github.com/brucechanjianle/ansible -e "dotfile_branch=docker" -v
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible
 
 # Declare inside container
 ENV IN_DOCKER 1
@@ -133,6 +124,3 @@ ENV IN_DOCKER 1
 RUN sudo apt-get autoclean -y -qq \
     && sudo apt-get autoremove -y -qq \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/*
-
-# Run colorful prompt
-CMD ["/bin/bash", "-l" ]

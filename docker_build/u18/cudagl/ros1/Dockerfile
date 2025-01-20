@@ -30,6 +30,8 @@ ENV TERM xterm-256color
 
 # Set LANG in order to display emoji
 ENV LANG en_US.UTF-8
+# Require for ansible
+ENV LC_ALL C.UTF-8
 
 # Export noninterative
 RUN export DEBIAN_FRONTEND=noninteractive \

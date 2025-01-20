@@ -1,5 +1,5 @@
 # Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
-FROM nvidia/cudagl:11.4.0-devel-ubuntu20.04
+FROM nvidia/cuda:12.4.1-devel-ubuntu20.04
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
@@ -30,6 +30,8 @@ ENV TERM xterm-256color
 
 # Set LANG in order to display emoji
 ENV LANG en_US.UTF-8
+# Require for ansible
+ENV LC_ALL C.UTF-8
 
 RUN apt-get update -qq \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
@@ -121,7 +123,7 @@ RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release 
     && sudo apt-get clean -qq
 
 # Setup dotfiles
-RUN ansible-pull -U https://github.com/brucechanjianle/ansible -e "dotfile_branch=docker" -v
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible
 
 # Declare inside container
 ENV IN_DOCKER 1
@@ -130,6 +132,3 @@ ENV IN_DOCKER 1
 RUN sudo apt-get autoclean -y -qq \
     && sudo apt-get autoremove -y -qq \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/*
-
-# Run colorful prompt
-CMD ["/bin/bash", "-l" ]
