@@ -14,9 +14,10 @@ Available options:
 -r, --ros       Set ROS version ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3], default 3
 -g, --gpu       Set true or false for nvidia gpu capabilities, default true
 -c, --cuda      Set true or false for cuda capabilities, default true
+-t, --runtime   Set to build with NVidia runtime image, smaller size. Default to using NVidia devel image
 
 Example:
-./build.bash -u 22 -r 2 -g true -c true
+./build.bash -u 22 -r 2 -g true -c true -t true
 EOF
   exit
 }
@@ -48,6 +49,7 @@ parse_params() {
   ENABLE_GPU="true"
   ENABLE_CUDA="true"
   IS_EMPTY=0
+  USE_RUNTIME_IMAGE="false"
 
   while test $# -gt 0; do
     case $1 in
@@ -88,6 +90,15 @@ parse_params() {
         die "-c only accepts true or false."
       fi
       ;;
+    -t | --runtime)
+      shift
+      if [[ $1 == "true" || $1 == "false" ]]
+      then
+        USE_RUNTIME_IMAGE=$1
+      else
+        die "-t only accepts true or false."
+      fi
+      ;;
     -?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
@@ -102,8 +113,14 @@ parse_params "$@"
 user_id=$(id -u)
 if [[ $ENABLE_GPU == "true" || $ENABLE_CUDA == "true" ]]
 then
-  # Build with cuda nvidia
-  docker build --rm -t ubuntu$UBUNTU_VERSION.04:$PACKAGE_VERSION-cnvros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl/ros$ROS_VERSION/Dockerfile .
+  if [[ $USE_RUNTIME_IMAGE == "true" ]]
+  then
+    # Build with cuda nvidia (runtime)
+    docker build --rm -t ubuntu$UBUNTU_VERSION.04:$PACKAGE_VERSION-cnvros$ROS_VERSION-runtime --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl_runtime/ros$ROS_VERSION/Dockerfile .
+  else
+    # Build with cuda nvidia (devel)
+    docker build --rm -t ubuntu$UBUNTU_VERSION.04:$PACKAGE_VERSION-cnvros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl/ros$ROS_VERSION/Dockerfile .
+  fi
 else
   # Build without nvidia
   docker build --rm -t ubuntu$UBUNTU_VERSION.04:$PACKAGE_VERSION-ros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/non_nvidia/ros$ROS_VERSION/Dockerfile .
