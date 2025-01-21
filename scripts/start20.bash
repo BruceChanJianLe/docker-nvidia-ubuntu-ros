@@ -67,6 +67,12 @@ then
       image="ubuntu20.04:"$PACKAGE_VERSION"-cnvros3"
   fi
 
+  read -p "y for runtime, n for devel image [Y/n]?" value
+  if [[ -z $value || $value == y || $value == Y ]]
+  then
+      image+="-runtime"
+  fi
+
   # Start docker container
   read -p "Container name: " CONTAINERNAME
 
@@ -79,6 +85,7 @@ then
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
+    -v "/media:/media" \
     -v $(pwd)/../docker_mount:/home/developer/docker_mount \
     --network host \
     --privileged \
@@ -114,6 +121,7 @@ else
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
+    -v "/media:/media" \
     -v $(pwd)/../docker_mount:/home/developer/docker_mount \
     --network host \
     --privileged \

@@ -55,13 +55,19 @@ read -p "NVIDIA Images / Non-NVIDIA images [Y/n]? " value
 if [[ -z $value || $value == y || $value == Y ]]
 then
 
-  read -p "Would you like to start ubuntu24.04:"$PACKAGE_VERSION"cnvros2 [Y/n]? " value
+  read -p "Would you like to start ubuntu24.04:"$PACKAGE_VERSION"-cnvros2 [Y/n]? " value
   if [[ -z $value || $value == y || $value == Y ]]
   then
       image="ubuntu24.04:"$PACKAGE_VERSION"-cnvros2"
   else
       echo "No image selected!"
       exit 1
+  fi
+
+  read -p "y for runtime, n for devel image [Y/n]?" value
+  if [[ -z $value || $value == y || $value == Y ]]
+  then
+      image+="-runtime"
   fi
 
   # Start docker container
@@ -76,6 +82,7 @@ then
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
+    -v "/media:/media" \
     -v $(pwd)/../docker_mount:/home/developer/docker_mount \
     --network host \
     --privileged \
@@ -87,7 +94,7 @@ then
 
 else
 
-  read -p "Would you like to start ubuntu24.04"$PACKAGE_VERSION":ros2 [Y/n]? " value
+  read -p "Would you like to start ubuntu24.04:"$PACKAGE_VERSION"-ros2 [Y/n]? " value
   if [[ -z $value || $value == y || $value == Y ]]
   then
       image="ubuntu24.04:"$PACKAGE_VERSION"-ros2"
@@ -108,6 +115,7 @@ else
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
+    -v "/media:/media" \
     -v $(pwd)/../docker_mount:/home/developer/docker_mount \
     --network host \
     --privileged \
