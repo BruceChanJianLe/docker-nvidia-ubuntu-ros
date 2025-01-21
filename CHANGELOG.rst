@@ -5,6 +5,8 @@ Changelog for docker-nvidia-ubuntu-ros
 0.0.2 (2025-01-15)
 ------------------
 - Use non-interactive script, pass in arguement to quickly build docker images
+- expose /media for contianers
+- Support nvidia runtime container for smaller image size
 - Support for u22 nvidia opengl (1.2glvnd) [nvidia image]
 - Support for u24 nvidia cuda (12.4.1) [custom image]
 - Support for u24 nvidia cuda (12.5.X) [nvidia image]
