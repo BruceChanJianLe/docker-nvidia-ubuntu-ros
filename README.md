@@ -13,16 +13,27 @@ sudo apt install ansible git -y
 ansible-pull -U https://github.com/brucechanjianle/ansible-docker -K
 ```
 
-## Building the Dockerfile
 
-Run the `build.bash` in the scripts directory. Follow the instructions to build the docker image.  
-version 0.0.1
+## Starting the Container
+
+Run the `start.bash` in the scripts directory. Follow the instructions to get the containers running.  
+Now, the images are available on [Docker Hub](https://hub.docker.com/repositories/brucechanjianle),
+you may also build from source by following the instructions in the next section.
+
 ```bash
 cd scripts
-./build.bash
+# For Ubunut 18
+./start18.bash
+# For Ubunut 20
+./start20.bash
+# For Ubunut 22
+./start22.bash
 ```
 
-newer version. Please use the help flag for more information.
+## Building from source
+
+Run the `build.bash` in the scripts directory. Follow the instructions to build the docker image.  
+
 ```bash
 cd scripts
 ./build.bash -u 22 -r 2 -g true -c true
@@ -35,21 +46,9 @@ Run the following commands to verify if the image is correctly built.
 docker images
 # Output
 # REPOSITORY          TAG                           IMAGE ID            CREATED             SIZE
-# ubuntu18.04         nvros                         8803ef8c8563        3 hours ago         3.32GB
+# ubuntu18.04         v0.0.2-nvros                  8803ef8c8563        3 hours ago         3.32GB
 ```
 
-## Starting the Container
-
-Run the `start.bash` in the scripts directory. Follow the instructions to get the images running.  
-```bash
-cd scripts
-# For Ubunut 18
-./start18.bash
-# For Ubunut 20
-./start20.bash
-# For Ubunut 22
-./start22.bash
-```
 
 ## Restarting the Container (after reboot)
 
@@ -59,7 +58,7 @@ cd scripts
 ./restart.bash
 ```
 
-## Joining the Container with New Terminal
+## Joining the Container from A New Terminal
 
 Run the `join.bash` in the scripts directory. Follow the instructions to join / connect to the running container.  
 ```bash
