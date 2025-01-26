@@ -1,5 +1,5 @@
-# Ubuntu 24.04 with nvidia-docker2 (openGL)
-FROM brucechanjianle/cuda:12.4.1-devel-ubuntu24.04
+# Ubuntu 24.04 with cuda
+FROM nvidia/cuda:12.5.1-devel-ubuntu24.04
 
 # Remove non-root ubuntu
 RUN touch /var/mail/ubuntu && chown ubuntu /var/mail/ubuntu && userdel -r ubuntu
