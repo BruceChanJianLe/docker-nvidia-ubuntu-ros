@@ -107,7 +107,7 @@ RUN sudo /bin/sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-s
     && sudo apt-get upgrade -y -qq
 
 # Setup dotfiles
-RUN ansible-pull -U https://github.com/brucechanjianle/ansible
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible --skip-tags additional
 
 # Declare inside container
 ENV IN_DOCKER 1

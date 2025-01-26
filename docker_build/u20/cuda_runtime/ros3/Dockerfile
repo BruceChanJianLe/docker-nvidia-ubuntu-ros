@@ -118,7 +118,7 @@ RUN sudo /bin/sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release 
     && sudo apt-get clean -qq
 
 # Setup dotfiles
-RUN ansible-pull -U https://github.com/brucechanjianle/ansible
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible --skip-tags additional
 
 # Declare inside container
 ENV IN_DOCKER 1
