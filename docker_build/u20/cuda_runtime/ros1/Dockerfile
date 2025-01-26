@@ -1,5 +1,5 @@
 # Ubuntu 20.04 with cuda runtime
-FROM nvidia/cuda:12.4.1-runtime-ubuntu20.04
+FROM nvidia/cuda:12.5.1-runtime-ubuntu20.04
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
@@ -33,13 +33,9 @@ ENV LANG en_US.UTF-8
 # Require for ansible
 ENV LC_ALL C.UTF-8
 
-# Export noninterative tzdata
-RUN export DEBIAN_FRONTEND=noninteractive \
- && sudo apt-get update && sudo apt-get install -y tzdata
-
 # Useful tools for development
 RUN apt-get update -qq \
-    && apt-get install -y -qq \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
     build-essential \
     cmake \
     cppcheck \
@@ -91,6 +87,10 @@ WORKDIR /home/$USERNAME
 
 # Make a mounting directory
 RUN mkdir -p /home/$USERNAME/docker_mount
+
+# Export noninterative tzdata
+RUN export DEBIAN_FRONTEND=noninteractive \
+ && sudo apt-get update && sudo apt-get install -y tzdata
 
 # Install ROS
 RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros -e "ros_distribution=noetic"
