@@ -1,5 +1,5 @@
 # Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
-FROM nvidia/cuda:12.4.1-devel-ubuntu20.04
+FROM nvidia/cuda:12.5.1-devel-ubuntu20.04
 
 # Author Information
 LABEL author="Bruce Chan Jian Le <jianle001@e.ntu.edu.sg>"
@@ -85,14 +85,9 @@ WORKDIR /home/$USERNAME
 # Make a mounting directory
 RUN mkdir -p /home/$USERNAME/docker_mount
 
-# Export noninterative
+# Export noninterative tzdata
 RUN export DEBIAN_FRONTEND=noninteractive \
- && export TZ=Etc/UTC \
- && sudo ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime \
- && sudo -E apt-get update -qq \
- && sudo -E apt-get install -y -qq --no-install-recommends tzdata \
- && sudo -E dpkg-reconfigure --frontend noninteractive tzdata \
- && sudo -E apt-get clean -qq
+ && sudo apt-get update && sudo apt-get install -y tzdata
 
 # Install ROS2 Foxy
 RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=foxy"

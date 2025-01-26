@@ -1,4 +1,4 @@
-# Ubuntu 20.04 with nvidia-docker2 (cuda + openGL)
+# Ubuntu 20.04 with cuda runtime
 FROM nvidia/cuda:12.4.1-runtime-ubuntu20.04
 
 # Author Information
@@ -33,17 +33,9 @@ ENV LANG en_US.UTF-8
 # Require for ansible
 ENV LC_ALL C.UTF-8
 
-# Export noninterative
+# Export noninterative tzdata
 RUN export DEBIAN_FRONTEND=noninteractive \
-&& apt-get update \
-&& apt-get install --no-install-recommends -y \
-tzdata \
-&& ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime \
-&& dpkg-reconfigure --frontend noninteractive tzdata \
-&& apt-get clean -qq \
-&& apt-get install --no-install-recommends -y keyboard-configuration \
-&& dpkg-reconfigure --frontend noninteractive keyboard-configuration \
-&& apt-get clean -qq
+ && sudo apt-get update && sudo apt-get install -y tzdata
 
 # Useful tools for development
 RUN apt-get update -qq \
