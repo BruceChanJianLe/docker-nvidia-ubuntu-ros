@@ -102,7 +102,7 @@ RUN sudo apt update -y -qq \
     && rosdep update
 
 # Setup dotfiles
-RUN ansible-pull -U https://github.com/brucechanjianle/ansible
+RUN ansible-pull -U https://github.com/brucechanjianle/ansible --skip-tags additional
 
 # Declare inside container
 ENV IN_DOCKER 1
