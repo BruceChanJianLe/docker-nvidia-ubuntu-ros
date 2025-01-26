@@ -1,0 +1,18 @@
+name: U20 ROS1 Docker Image CI (cuda)
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'docker_build/u20/cuda/ros1/**'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image for U20 ROS1 (cuda)
+      run: docker build --rm -t ubuntu20.04:v0.0.3-cnvros1 --build-arg user_id=$(id -u) -f docker_build/u20/cuda/ros1/Dockerfile .

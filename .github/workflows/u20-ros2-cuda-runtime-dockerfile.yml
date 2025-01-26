@@ -1,0 +1,18 @@
+name: U20 ROS2 Docker Image CI (cuda runtime)
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'docker_build/u20/cuda_runtime/ros2/**'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image for U20 ROS2 (cuda runtime)
+      run: docker build --rm -t ubuntu20.04:v0.0.3-cnvros2-runtime --build-arg user_id=$(id -u) -f docker_build/u20/cuda_runtime/ros2/Dockerfile .
