@@ -2,6 +2,13 @@
 Changelog for docker-nvidia-ubuntu-ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2025-01-26)
+------------------
+- Support for u20 nvidia cuda and cuda runtime (12.5.1) [nvidia image]
+- Support for u22 nvidia cuda and cuda runtime (12.5.1) [nvidia image]
+- Support for u24 nvidia cuda and cuda runtime (12.5.1) [nvidia image]
+- Dropping support for u18
+
 0.0.2 (2025-01-15)
 ------------------
 - Use non-interactive script, pass in arguement to quickly build docker images
