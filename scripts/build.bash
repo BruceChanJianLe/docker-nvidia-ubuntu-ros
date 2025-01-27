@@ -10,7 +10,7 @@ Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-u] [-r] [-g] [-c]
 Script description here.
 Available options:
 -h, --help      Print this help and exit
--u, --ubuntu    Set Ubuntu version [18/20/22], default 22
+-u, --ubuntu    Set Ubuntu version [20/22/24], default 22
 -r, --ros       Set ROS version ROS1 / ROS2 / (ROS1 + ROS2) [1/2/3], default 3
 -g, --gpu       Set true or false for nvidia gpu capabilities, default true
 -c, --cuda      Set true or false for cuda capabilities, default true
@@ -56,11 +56,11 @@ parse_params() {
     -h | --help) usage ;;
     -u | --ubuntu)
       shift
-      if [[ $1 == "18" || $1 == "20" || $1 == "22" || $1 == "24" ]]
+      if [[ $1 == "20" || $1 == "22" || $1 == "24" ]]
       then
         UBUNTU_VERSION=$1
       else
-        die "-u accepts [18/20/22/24]."
+        die "-u accepts [20/22/24]."
       fi
       ;;
     -r | --ros)
@@ -116,10 +116,10 @@ then
   if [[ $USE_RUNTIME_IMAGE == "true" ]]
   then
     # Build with cuda nvidia (runtime)
-    docker build --rm -t ubuntu$UBUNTU_VERSION.04:$PACKAGE_VERSION-cnvros$ROS_VERSION-runtime --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl_runtime/ros$ROS_VERSION/Dockerfile .
+    docker build --rm -t ubuntu$UBUNTU_VERSION.04:$PACKAGE_VERSION-cnvros$ROS_VERSION-runtime --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cuda_runtime/ros$ROS_VERSION/Dockerfile .
   else
     # Build with cuda nvidia (devel)
-    docker build --rm -t ubuntu$UBUNTU_VERSION.04:$PACKAGE_VERSION-cnvros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cudagl/ros$ROS_VERSION/Dockerfile .
+    docker build --rm -t ubuntu$UBUNTU_VERSION.04:$PACKAGE_VERSION-cnvros$ROS_VERSION --build-arg user_id=$user_id -f ../docker_build/u$UBUNTU_VERSION/cuda/ros$ROS_VERSION/Dockerfile .
   fi
 else
   # Build without nvidia
