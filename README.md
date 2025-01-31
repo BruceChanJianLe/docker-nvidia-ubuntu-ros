@@ -1,9 +1,9 @@
+> If you would like podman the open-source alternative,
+> you can refer to [podman-nvidia-ubuntu-ros](https://github.com/BruceChanJianLe/podman-nvidia-ubuntu-ros)
+
 # Docker Nvidia Ubuntu ROS
 
 This repository demonstrates the steps to setup docker nvidia on ubuntu with ROS in a container.
-
-> If you would like podman the open-source alternative,
-> you can refer to [podman-nvidia-ubuntu-ros](https://github.com/BruceChanJianLe/podman-nvidia-ubuntu-ros)
 
 ## Installing Docker and Nvidia Docker
 
