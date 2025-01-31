@@ -6,7 +6,7 @@ source version_info
 
 usage() {
   cat <<EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-u] [-r] [-g] [-c]
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-u] [-r] [-g] [-c] [-t]
 Script description here.
 Available options:
 -h, --help      Print this help and exit
