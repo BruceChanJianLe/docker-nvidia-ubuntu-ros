@@ -1,10 +1,10 @@
-name: U22 ROS2 Docker Image CI (cuda runtime)
+name: U20 ROS1 and ROS2 Docker Image CI (cuda runtime)
 
 on:
   push:
     branches: [ "master" ]
     paths:
-      - 'docker_build/u22/cuda_runtime/ros2/**'
+      - 'docker_build/u20/cuda_runtime/ros3/**'
 
 jobs:
 
@@ -14,5 +14,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image for U22 ROS2 (cuda runtime)
-      run: docker build --rm -t ubuntu22.04:v0.0.3-cnvros2-runtime --build-arg user_id=$(id -u) -f docker_build/u22/cuda_runtime/ros2/Dockerfile .
+    - name: Build the Docker image for U20 ROS1 and ROS2 (cuda runtime)
+      run: docker build --rm -t ubuntu20.04:v0.0.3-cnvros3-runtime --build-arg user_id=$(id -u) -f docker_build/u20/cuda_runtime/ros3/Dockerfile .
