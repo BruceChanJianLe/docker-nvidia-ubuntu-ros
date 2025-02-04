@@ -25,11 +25,11 @@ you may also build from source by following the instructions in the next section
 
 ```bash
 cd scripts
-# For Ubunut 18
+# For Ubuntu 18
 ./start18.bash
-# For Ubunut 20
+# For Ubuntu 20
 ./start20.bash
-# For Ubunut 22
+# For Ubuntu 22
 ./start22.bash
 ```
 
