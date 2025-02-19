@@ -20,7 +20,7 @@ ansible-pull -U https://github.com/brucechanjianle/ansible-docker -K
 ## Starting the Container
 
 Run the `start.bash` in the scripts directory. Follow the instructions to get the containers running.  
-Now, the images are available on [Docker Hub](https://hub.docker.com/repositories/brucechanjianle),
+Now, the images are available on [Docker Hub](https://hub.docker.com/u/brucechanjianle),
 you may also build from source by following the instructions in the next section.
 
 ```bash
