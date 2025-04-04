@@ -32,7 +32,8 @@ then
 fi
 
 # Obatin docker-ce version for comparison (strip leading info for version number)
-DOCKER_VER=$(dpkg-query -f='${Version}' --show docker-ce | sed 's/[0-9]://')
+# DOCKER_VER=$(dpkg-query -f='${Version}' --show docker-ce | sed 's/[0-9]://')
+DOCKER_VER=$(docker --version | sed 's/Docker version \(.*\),.*/\1/')
 if dpkg --compare-versions 19.03 gt "$DOCKER_VER"
 then
     echo "Docker version is less than 19.03, using nvidia-docker2 runtime"
