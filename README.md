@@ -25,12 +25,12 @@ you may also build from source by following the instructions in the next section
 
 ```bash
 cd scripts
-# For Ubuntu 18
-./start18.bash
 # For Ubuntu 20
 ./start20.bash
 # For Ubuntu 22
 ./start22.bash
+# For Ubuntu 24
+./start24.bash
 ```
 
 ## Building from source
@@ -49,7 +49,7 @@ Run the following commands to verify if the image is correctly built.
 docker images
 # Output
 # REPOSITORY          TAG                           IMAGE ID            CREATED             SIZE
-# ubuntu18.04         v0.0.2-nvros                  8803ef8c8563        3 hours ago         3.32GB
+# ubuntu20.04         v0.0.3-nvros                  8803ef8c8563        3 hours ago         3.32GB
 ```
 
 
