@@ -70,6 +70,22 @@ cd scripts
 ```
 The script uses `exec` instead of `attach` as this creates another process rather than using the already existing process.  
 
+## GPU
+
+If you observed, the warning and error message below:  
+```bash
+MESA: warning: Driver does not support the 0x7d55 PCI ID.
+libGL error: failed to create dri screen
+libGL error: failed to load driver: iris
+```
+
+You may use the below method to offload the program to GPU:  
+```bash
+# __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia command
+__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia rviz2
+```
+[link](https://wiki.archlinux.org/title/PRIME)
+
 ## TODO
 
 Update Dockerfile:
