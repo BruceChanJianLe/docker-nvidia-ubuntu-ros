@@ -6,6 +6,8 @@ services:
       context: .
       args:
         - user_id=$(id -u)
+    ports:
+      host
     environment:
       - DISPLAY=$DISPLAY
     volumes:
