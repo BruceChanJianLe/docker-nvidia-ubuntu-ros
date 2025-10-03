@@ -74,24 +74,47 @@ then
   # Start docker container
   read -p "Container name: " CONTAINERNAME
 
-  docker run -it \
-    -d \
-    -e DISPLAY \
-    -e QT_X11_NO_MITSHM=1 \
-    -e XAUTHORITY=$XAUTH \
-    -v "$XAUTH:$XAUTH" \
-    -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-    -v "/etc/localtime:/etc/localtime:ro" \
-    -v "/dev:/dev" \
-    -v "/media:/media" \
-    -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-    --network host \
-    --privileged \
-    --security-opt seccomp=unconfined \
-    --name $CONTAINERNAME \
-    --cap-add=SYS_PTRACE \
-    $DOCKER_OPTS \
-    $image
+  if [ -n "$WAYLAND_DISPLAY" ]; then
+    docker run -it \
+      -d \
+      -e DISPLAY \
+      -e QT_X11_NO_MITSHM=1 \
+      -e XAUTHORITY=$XAUTH \
+      -v "$XAUTH:$XAUTH" \
+      -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+      -v "/etc/localtime:/etc/localtime:ro" \
+      -v "/dev:/dev" \
+      -v "/media:/media" \
+      -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+      -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/tmp/$WAYLAND_DISPLAY \
+      -e WAYLAND_DISPLAY=/tmp/$WAYLAND_DISPLAY \
+      --network host \
+      --privileged \
+      --security-opt seccomp=unconfined \
+      --name $CONTAINERNAME \
+      --cap-add=SYS_PTRACE \
+      $DOCKER_OPTS \
+      $image
+  else
+    docker run -it \
+      -d \
+      -e DISPLAY \
+      -e QT_X11_NO_MITSHM=1 \
+      -e XAUTHORITY=$XAUTH \
+      -v "$XAUTH:$XAUTH" \
+      -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+      -v "/etc/localtime:/etc/localtime:ro" \
+      -v "/dev:/dev" \
+      -v "/media:/media" \
+      -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+      --network host \
+      --privileged \
+      --security-opt seccomp=unconfined \
+      --name $CONTAINERNAME \
+      --cap-add=SYS_PTRACE \
+      $DOCKER_OPTS \
+      $image
+  fi
 
 else
 
@@ -107,22 +130,44 @@ else
   # Start docker container
   read -p "Container name: " CONTAINERNAME
 
-  docker run -it \
-    -d \
-    -e DISPLAY \
-    -e QT_X11_NO_MITSHM=1 \
-    -e XAUTHORITY=$XAUTH \
-    -v "$XAUTH:$XAUTH" \
-    -v "/tmp/.X11-unix:/tmp/.X11-unix" \
-    -v "/etc/localtime:/etc/localtime:ro" \
-    -v "/dev:/dev" \
-    -v "/media:/media" \
-    -v $(pwd)/../docker_mount:/home/developer/docker_mount \
-    --network host \
-    --privileged \
-    --security-opt seccomp=unconfined \
-    --name $CONTAINERNAME \
-    --cap-add=SYS_PTRACE \
-    $image
+  if [ -n "$WAYLAND_DISPLAY" ]; then
+    docker run -it \
+      -d \
+      -e DISPLAY \
+      -e QT_X11_NO_MITSHM=1 \
+      -e XAUTHORITY=$XAUTH \
+      -v "$XAUTH:$XAUTH" \
+      -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+      -v "/etc/localtime:/etc/localtime:ro" \
+      -v "/dev:/dev" \
+      -v "/media:/media" \
+      -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+      -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/tmp/$WAYLAND_DISPLAY \
+      -e WAYLAND_DISPLAY=/tmp/$WAYLAND_DISPLAY \
+      --network host \
+      --privileged \
+      --security-opt seccomp=unconfined \
+      --name $CONTAINERNAME \
+      --cap-add=SYS_PTRACE \
+      $image
+  else
+    docker run -it \
+      -d \
+      -e DISPLAY \
+      -e QT_X11_NO_MITSHM=1 \
+      -e XAUTHORITY=$XAUTH \
+      -v "$XAUTH:$XAUTH" \
+      -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+      -v "/etc/localtime:/etc/localtime:ro" \
+      -v "/dev:/dev" \
+      -v "/media:/media" \
+      -v $(pwd)/../docker_mount:/home/developer/docker_mount \
+      --network host \
+      --privileged \
+      --security-opt seccomp=unconfined \
+      --name $CONTAINERNAME \
+      --cap-add=SYS_PTRACE \
+      $image
+  fi
 
 fi
