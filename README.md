@@ -35,11 +35,27 @@ cd scripts
 
 ## Building from source
 
-Run the `build.bash` in the scripts directory. Follow the instructions to build the docker image.  
+Edit the `.env` to indicate the Ubuntu version and ROS version.  
 
 ```bash
-cd scripts
-./build.bash -u 22 -r 2 -g true -c true
+vim .env
+# Enviroment Variable
+
+# PACKAGE_VERSION=v0.0.4
+# UBUNTU_VERSION=24
+# ROS_VERSION=2
+```
+
+Build all images based on the `.env` file.  
+```bash
+docker compose build
+```
+
+To build targeted image please pass in the profiles tag.  
+Available tags are `cuda`, `cuda_runtime` and `non_nvidia`.  
+
+```bash
+docker compose --profile cuda_runtime build
 ```
 
 ## Viewing Docker images
