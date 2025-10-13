@@ -2,7 +2,7 @@
 # This script builds the docker image
 
 # Obtain version info
-source version_info
+source ../.env
 
 usage() {
   cat <<EOF
