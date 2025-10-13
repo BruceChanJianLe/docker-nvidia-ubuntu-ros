@@ -48,11 +48,11 @@ vim .env
 
 Build all images based on the `.env` file.  
 ```bash
-docker compose build
+docker compose --profile all build
 ```
 
 To build targeted image please pass in the profiles tag.  
-Available tags are `cuda`, `cuda_runtime` and `non_nvidia`.  
+Available tags are `all`, `cuda`, `cuda_runtime` and `non_nvidia`.  
 
 ```bash
 docker compose --profile cuda_runtime build
