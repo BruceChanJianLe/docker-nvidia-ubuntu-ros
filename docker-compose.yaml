@@ -8,19 +8,8 @@ services:
     image:
       ubuntu${UBUNTU_VERSION}.04:${PACKAGE_VERSION}-cnvros${ROS_VERSION}
     profiles:
+      - all
       - cuda
-    network_mode:
-      host
-    environment:
-      - DISPLAY=$DISPLAY
-      - QT_X11_NO_MITSHM=1
-      - XAUTHORITY=$XAUTH
-      - WAYLAND_DISPLAY=/tmp/$WAYLAND_DISPLAY
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /etc/localtime:/etc/localtime:ro
-      - /dev:/dev
-      - /media:/media
 
   cuda_runtime:
     build:
@@ -31,16 +20,8 @@ services:
     image:
       ubuntu${UBUNTU_VERSION}.04:${PACKAGE_VERSION}-cnvros2-runtime
     profiles:
+      - all
       - cuda_runtime
-    network_mode:
-      host
-    environment:
-      - DISPLAY=$DISPLAY
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /etc/localtime:/etc/localtime:ro
-      - /dev:/dev
-      - /media:/media
 
   non_nvidia:
     build:
@@ -51,13 +32,5 @@ services:
     image:
       ubuntu${UBUNTU_VERSION}.04:${PACKAGE_VERSION}-ros${ROS_VERSION}
     profiles:
+      - all
       - non_nvidia
-    network_mode:
-      host
-    environment:
-      - DISPLAY=$DISPLAY
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /etc/localtime:/etc/localtime:ro
-      - /dev:/dev
-      - /media:/media
