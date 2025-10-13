@@ -2,6 +2,11 @@
 Changelog for docker-nvidia-ubuntu-ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.4 (2025-10-13)
+------------------
+- Use docker compose file to build images
+- Deprecate version_info file, using .env file which is supported by docker compose
+
 0.0.3 (2025-01-26)
 ------------------
 - Support for u20 nvidia cuda and cuda runtime (12.5.1) [nvidia image]
