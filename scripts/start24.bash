@@ -2,7 +2,7 @@
 # This script starts the docker container
 
 # Obtain version info
-source version_info
+source ../.env
 
 # Requirement:
 # - docker
