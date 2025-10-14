@@ -35,27 +35,17 @@ cd scripts
 
 ## Building from source
 
-Edit the `.env` to indicate the Ubuntu version and ROS version.  
-
+Build all images define in the `docker-compose.yaml` file.  
 ```bash
-vim .env
-# Enviroment Variable
-
-# PACKAGE_VERSION=v0.0.4
-# UBUNTU_VERSION=24
-# ROS_VERSION=2
+docker compose build
 ```
 
-Build all images based on the `.env` file.  
-```bash
-docker compose --profile all build
-```
-
-To build targeted image please pass in the profiles tag.  
-Available tags are `all`, `cuda`, `cuda_runtime` and `non_nvidia`.  
+To build targeted image, please pass in correct service service name.  
+Available tags are `uxx_cuda`, `uxx_cuda_runtime` and `uxx_non_nvidia`.  
+Where xx can be 22, 24.  
 
 ```bash
-docker compose --profile cuda_runtime build
+docker compose build u22_cuda_runtime
 ```
 
 ## Viewing Docker images
