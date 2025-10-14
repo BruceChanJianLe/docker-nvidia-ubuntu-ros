@@ -16,6 +16,8 @@ sudo apt install ansible git -y
 ansible-pull -U https://github.com/brucechanjianle/ansible-docker -K
 ```
 
+> NOTICE!
+> Support for U20 will be dropped in after version 0.0.4!
 
 ## Starting the Container
 
