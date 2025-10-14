@@ -1,36 +1,141 @@
 services:
-  cuda:
-    build:
-      context: ./docker_build
-      dockerfile: u${UBUNTU_VERSION}/cuda/ros${ROS_VERSION}/Dockerfile
-      args:
-        user_id: ${user_id}
-    image:
-      ubuntu${UBUNTU_VERSION}.04:${PACKAGE_VERSION}-cnvros${ROS_VERSION}
-    profiles:
-      - all
-      - cuda
 
-  cuda_runtime:
+  # ubuntu 20 ros1
+  u20_cuda_r1:
     build:
       context: ./docker_build
-      dockerfile: u${UBUNTU_VERSION}/cuda_runtime/ros${ROS_VERSION}/Dockerfile
+      dockerfile: u20/cuda/ros1/Dockerfile
       args:
         user_id: ${user_id}
     image:
-      ubuntu${UBUNTU_VERSION}.04:${PACKAGE_VERSION}-cnvros2-runtime
-    profiles:
-      - all
-      - cuda_runtime
+      ubuntu20.04:${PACKAGE_VERSION}-cnvros1
 
-  non_nvidia:
+  u20_cuda_runtime_r1:
     build:
       context: ./docker_build
-      dockerfile: u${UBUNTU_VERSION}/non_nvidia/ros${ROS_VERSION}/Dockerfile
+      dockerfile: u20/cuda_runtime/ros1/Dockerfile
       args:
         user_id: ${user_id}
     image:
-      ubuntu${UBUNTU_VERSION}.04:${PACKAGE_VERSION}-ros${ROS_VERSION}
-    profiles:
-      - all
-      - non_nvidia
+      ubuntu20.04:${PACKAGE_VERSION}-cnvros1-runtime
+
+  u20_non_nvidia_r1:
+    build:
+      context: ./docker_build
+      dockerfile: u20/non_nvidia/ros1/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu20.04:${PACKAGE_VERSION}-ros1
+
+  # ubuntu 20 ros2
+  u20_cuda_r2:
+    build:
+      context: ./docker_build
+      dockerfile: u20/cuda/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu20.04:${PACKAGE_VERSION}-cnvros2
+
+  u20_cuda_runtime_r2:
+    build:
+      context: ./docker_build
+      dockerfile: u20/cuda_runtime/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu20.04:${PACKAGE_VERSION}-cnvros2-runtime
+
+  u20_non_nvidia_r2:
+    build:
+      context: ./docker_build
+      dockerfile: u20/non_nvidia/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu20.04:${PACKAGE_VERSION}-ros2
+
+  # ubuntu 20 ros3
+  u20_cuda_r3:
+    build:
+      context: ./docker_build
+      dockerfile: u20/cuda/ros3/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu20.04:${PACKAGE_VERSION}-cnvros3
+
+  u20_cuda_runtime_r3:
+    build:
+      context: ./docker_build
+      dockerfile: u20/cuda_runtime/ros3/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu20.04:${PACKAGE_VERSION}-cnvros3-runtime
+
+  u20_non_nvidia_r3:
+    build:
+      context: ./docker_build
+      dockerfile: u20/non_nvidia/ros3/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu20.04:${PACKAGE_VERSION}-ros3
+
+  # ubuntu 22 ros2
+  u22_cuda:
+    build:
+      context: ./docker_build
+      dockerfile: u22/cuda/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu22.04:${PACKAGE_VERSION}-cnvros2
+
+  u22_cuda_runtime:
+    build:
+      context: ./docker_build
+      dockerfile: u22/cuda_runtime/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu22.04:${PACKAGE_VERSION}-cnvros2-runtime
+
+  u22_non_nvidia:
+    build:
+      context: ./docker_build
+      dockerfile: u22/non_nvidia/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu22.04:${PACKAGE_VERSION}-ros2
+
+  # ubuntu 24 ros2
+  u24_cuda:
+    build:
+      context: ./docker_build
+      dockerfile: u24/cuda/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu24.04:${PACKAGE_VERSION}-cnvros2
+
+  u24_cuda_runtime:
+    build:
+      context: ./docker_build
+      dockerfile: u24/cuda_runtime/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu24.04:${PACKAGE_VERSION}-cnvros2-runtime
+
+  u24_non_nvidia:
+    build:
+      context: ./docker_build
+      dockerfile: u24/non_nvidia/ros2/Dockerfile
+      args:
+        user_id: ${user_id}
+    image:
+      ubuntu24.04:${PACKAGE_VERSION}-ros2
