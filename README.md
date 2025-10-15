@@ -37,6 +37,13 @@ cd scripts
 
 ## Building from source
 
+Update `.env` file with user id
+```bash
+id -u
+vi .env
+# user_id=1000
+```
+
 Build all images define in the `docker-compose.yaml` file.  
 ```bash
 docker compose build
