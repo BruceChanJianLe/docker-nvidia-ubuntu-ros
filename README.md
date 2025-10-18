@@ -101,15 +101,19 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia rviz2
 ```
 [link](https://wiki.archlinux.org/title/PRIME)
 
-## TODO
+## Error
 
-Update Dockerfile:
-- ./docker_build/u18/opengl/Dockerfile
-- ./docker_build/u20/cudagl/ros2/Dockerfile
-- ./docker_build/u20/cudagl/ros2/Dockerfile
-- ./docker_build/u20/non_nvidia/ros1/Dockerfile
-- ./docker_build/u20/non_nvidia/ros2/Dockerfile
-- ./docker_build/u20/non_nvidia/ros3/Dockerfile
+This section are some errors observed.  
+
+Error: during `sudo apt update` inside a container.  
+```bash
+Unable to mkstemp /tmp/apt-key.64EmWp.asc - GetTempFile (13: Permission denied) Couldn't create temporary file /tmp/apt.conf.M1CItx for passing config to apt-key
+```
+
+Solution:  
+```bash
+sudo chmod 1777 /tmp
+```
 
 ## Reference
 - nvidia opengl [link](https://hub.docker.com/r/nvidia/opengl)
