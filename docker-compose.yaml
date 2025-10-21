@@ -9,6 +9,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-cnvros1
+    container_name:
+      u20_cuda_r1
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u20_cuda_runtime_r1:
     build:
@@ -18,6 +40,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-cnvros1-runtime
+    container_name:
+      u20_cuda_runtime_r1
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u20_non_nvidia_r1:
     build:
@@ -27,6 +71,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-ros1
+    container_name:
+      u20_non_nvidia_r1
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   # ubuntu 20 ros2
   u20_cuda_r2:
@@ -37,6 +103,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-cnvros2
+    container_name:
+      u24_non_nvidia
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u20_cuda_runtime_r2:
     build:
@@ -46,6 +134,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-cnvros2-runtime
+    container_name:
+      u20_cuda_runtime_r2
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u20_non_nvidia_r2:
     build:
@@ -55,6 +165,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-ros2
+    container_name:
+      u20_non_nvidia_r2
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   # ubuntu 20 ros3
   u20_cuda_r3:
@@ -65,6 +197,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-cnvros3
+    container_name:
+      u20_cuda_r3
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u20_cuda_runtime_r3:
     build:
@@ -74,6 +228,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-cnvros3-runtime
+    container_name:
+      u20_cuda_runtime_r3
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u20_non_nvidia_r3:
     build:
@@ -83,6 +259,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu20.04:${PACKAGE_VERSION}-ros3
+    container_name:
+      u20_non_nvidia_r3
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   # ubuntu 22 ros2
   u22_cuda:
@@ -93,6 +291,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu22.04:${PACKAGE_VERSION}-cnvros2
+    container_name:
+      u22_cuda
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u22_cuda_runtime:
     build:
@@ -102,6 +322,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu22.04:${PACKAGE_VERSION}-cnvros2-runtime
+    container_name:
+      u22_cuda_runtime
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u22_non_nvidia:
     build:
@@ -111,6 +353,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu22.04:${PACKAGE_VERSION}-ros2
+    container_name:
+      u22_non_nvidia
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   # ubuntu 24 ros2
   u24_cuda:
@@ -121,6 +385,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu24.04:${PACKAGE_VERSION}-cnvros2
+    container_name:
+      u24_cuda
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u24_cuda_runtime:
     build:
@@ -130,6 +416,28 @@ services:
         user_id: ${user_id}
     image:
       ubuntu24.04:${PACKAGE_VERSION}-cnvros2-runtime
+    container_name:
+      u24_cuda_runtime
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
 
   u24_non_nvidia:
     build:
@@ -139,3 +447,25 @@ services:
         user_id: ${user_id}
     image:
       ubuntu24.04:${PACKAGE_VERSION}-ros2
+    container_name:
+      u24_non_nvidia
+    tty: true
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+      - WAYLAND_DISPLAY=/tmp/${WAYLAND_DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /media:/media
+      - ./docker_mount:/home/developer/docker_mount
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
