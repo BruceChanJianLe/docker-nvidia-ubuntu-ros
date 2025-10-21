@@ -63,8 +63,8 @@ Run the following commands to verify if the image is correctly built.
 ```bash
 docker images
 # Output
-# REPOSITORY          TAG                           IMAGE ID            CREATED             SIZE
-# ubuntu20.04         v0.0.3-nvros                  8803ef8c8563        3 hours ago         3.32GB
+# REPOSITORY    TAG                       IMAGE ID        CREATED       SIZE
+# ubuntu24.04   v0.0.4-cnvros2-runtime    e07195dc0e24    6 days ago    9.29GB
 ```
 
 
