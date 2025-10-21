@@ -33,10 +33,6 @@ ENV LANG en_US.UTF-8
 # Require for ansible
 ENV LC_ALL C.UTF-8
 
-# Export noninterative tzdata
-RUN export DEBIAN_FRONTEND=noninteractive \
- && sudo apt-get update && sudo apt-get install -y tzdata
-
 # Useful tools for development
 RUN apt-get update -qq \
     && apt-get install -y -qq \
@@ -91,6 +87,10 @@ WORKDIR /home/$USERNAME
 
 # Make a mounting directory
 RUN mkdir -p /home/$USERNAME/docker_mount
+
+# Export noninterative tzdata
+RUN export DEBIAN_FRONTEND=noninteractive \
+ && sudo apt-get update && sudo apt-get install -y tzdata
 
 # Install ROS
 RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros -e "ros_distribution=noetic"
