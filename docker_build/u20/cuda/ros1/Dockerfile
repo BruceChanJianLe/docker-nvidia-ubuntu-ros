@@ -35,7 +35,7 @@ ENV LC_ALL C.UTF-8
 
 # Useful tools for development
 RUN apt-get update -qq \
-    && apt-get install -y -qq \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
     build-essential \
     cmake \
     cppcheck \
