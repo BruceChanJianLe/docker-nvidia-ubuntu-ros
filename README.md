@@ -35,6 +35,14 @@ cd scripts
 ./start24.bash
 ```
 
+Alternatively, you can Start a docker container using docker compose command,
+this command will detach for user to attach separately. Refer to the example
+command below:  
+
+```bash
+docker compose up u22_cuda_runtime -d
+```
+
 ## Building from source
 
 Update `.env` file with user id
