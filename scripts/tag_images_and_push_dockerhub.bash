@@ -42,4 +42,4 @@ for IMAGE in "${IMAGES[@]}"; do
   TAG_IMAGES+=("$TAG_IMAGE_NAME")
 done
 
-printf "%s\n" "${TAG_IMAGES[@]}" | parallel -j 8 docker push {}
+printf "%s\n" "${TAG_IMAGES[@]}" | parallel -j 8 --bar docker push {}
