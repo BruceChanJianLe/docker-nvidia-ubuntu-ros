@@ -115,7 +115,7 @@ RUN vim +PlugInstall +qa
 
 
 # config & cleanup
-RUN sudo apt-get autoclean -y -qq \
+RUN sudo apt-get clean -y -qq \
     && sudo apt-get autoremove -y -qq \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/*
 

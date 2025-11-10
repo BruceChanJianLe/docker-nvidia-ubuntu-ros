@@ -78,7 +78,7 @@ RUN ansible-pull -U https://github.com/brucechanjianle/ansible --skip-tags addit
 ENV IN_DOCKER 1
 
 # config & cleanup
-RUN sudo apt-get autoclean -y -qq \
+RUN sudo apt-get clean -y -qq \
     && sudo apt-get autoremove -y -qq \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/*
 
