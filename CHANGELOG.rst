@@ -6,6 +6,7 @@ Changelog for docker-nvidia-ubuntu-ros
 ------------------
 - Use docker compose file to build images
 - Deprecate version_info file, using .env file which is supported by docker compose
+- Final support for u20 and archived u18 at docker hub
 
 0.0.3 (2025-01-26)
 ------------------
