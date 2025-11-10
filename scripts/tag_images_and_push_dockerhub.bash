@@ -33,7 +33,7 @@ TARGET_REGISTRY="brucechanjianle"
 TAG_IMAGES=()
 
 # Loop through and tag images
-for IMAGE in "${LOCAL_IMAGES[@]}"; do
+for IMAGE in "${IMAGES[@]}"; do
   TAG_IMAGE_NAME="$TARGET_REGISTRY/$IMAGE"
 
   echo "Tagging $IMAGE as $TAG_IMAGE_NAME"
