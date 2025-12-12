@@ -86,6 +86,7 @@ then
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
+    -v "/mnt:/mnt" \
     -v "/media:/media" \
     -v $(pwd)/../docker_mount:/home/developer/docker_mount \
     --network host \
@@ -122,6 +123,7 @@ else
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
+    -v "/mnt:/mnt" \
     -v "/media:/media" \
     -v $(pwd)/../docker_mount:/home/developer/docker_mount \
     --network host \
