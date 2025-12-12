@@ -28,6 +28,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -59,6 +60,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -90,6 +92,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -122,6 +125,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -153,6 +157,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -184,6 +189,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -216,6 +222,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -247,6 +254,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -278,6 +286,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -310,6 +319,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -341,6 +351,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -372,6 +383,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -404,6 +416,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -435,6 +448,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
@@ -466,6 +480,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/localtime:/etc/localtime:ro
       - /dev:/dev
+      - /mnt:/mnt
       - /media:/media
       - ./docker_mount:/home/developer/docker_mount
       - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}
