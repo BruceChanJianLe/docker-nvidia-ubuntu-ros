@@ -7,6 +7,7 @@ Changelog for docker-nvidia-ubuntu-ros
 - Use docker compose file to build images
 - Deprecate version_info file, using .env file which is supported by docker compose
 - Final support for u20 and archived u18 at docker hub
+- Expose /dev and /mnt for containers to mount devices and data storage
 
 0.0.3 (2025-01-26)
 ------------------
@@ -18,7 +19,7 @@ Changelog for docker-nvidia-ubuntu-ros
 0.0.2 (2025-01-15)
 ------------------
 - Use non-interactive script, pass in arguement to quickly build docker images
-- expose /media for contianers
+- Expose /media for contianers
 - Support nvidia runtime container for smaller image size
 - Support for u22 nvidia opengl (1.2glvnd) [nvidia image]
 - Support for u24 nvidia cuda (12.4.1) [custom image]
