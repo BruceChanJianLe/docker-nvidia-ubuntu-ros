@@ -16,9 +16,6 @@ sudo apt install ansible git -y
 ansible-pull -U https://github.com/brucechanjianle/ansible-docker -K
 ```
 
-> NOTICE!
-> Support for U20 will be dropped in after version 0.0.4!
-
 ## Starting the Container
 
 Run the `start.bash` in the scripts directory. Follow the instructions to get the containers running.  
@@ -27,8 +24,6 @@ you may also build from source by following the instructions in the next section
 
 ```bash
 cd scripts
-# For Ubuntu 20
-./start20.bash
 # For Ubuntu 22
 ./start22.bash
 # For Ubuntu 24
@@ -64,6 +59,19 @@ Where xx can be 22, 24.
 ```bash
 docker compose build u22_cuda_runtime
 ```
+
+<details>
+<summary>Building For Multi-Platform</summary>
+
+```bash
+# Create multi-platform builder
+docker buildx create --name multibuilder --driver docker-container --use --platform linux/x86_64,linux/arm64,linux/ppc64le --driver-opt image=moby/buildkit:v0.10.3
+# Bootstrap it
+docker buildx inspect --bootstrap
+```
+Link: https://docs.docker.com/go/build-multi-platform/
+
+</details>
 
 ## Viewing Docker images
 
