@@ -106,14 +106,15 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 # Install ROS2
 RUN ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy"
 
+# Does not exist in arm build
 # Install Gazebo Harmonic
-RUN sudo apt-get install ros-jazzy-ros-gz -y
+# RUN sudo apt-get install ros-jazzy-ros-gz -y
 
 # Installing Rosdep
-RUN sudo apt update -y -qq \
-    && sudo DEBIAN_FRONTEND=noninteractive apt install python3-rosdep -y -qq \
-    && sudo rosdep init \
-    && rosdep update
+# RUN sudo apt update -y -qq \
+#     && sudo DEBIAN_FRONTEND=noninteractive apt install python3-rosdep -y -qq \
+#     && sudo rosdep init \
+#     && rosdep update
 
 # Setup dotfiles
 RUN ansible-pull -U https://github.com/brucechanjianle/ansible --skip-tags additional
